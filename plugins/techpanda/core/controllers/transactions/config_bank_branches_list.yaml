@@ -1,0 +1,12 @@
+list: $/techpanda/core/models/bankbranch/columns.yaml
+modelClass: Techpanda\Core\Models\BankBranch
+title: Bank Branches
+noRecordsMessage: 'backend::lang.list.no_records'
+showSetup: true
+showCheckboxes: true
+recordsPerPage: 20
+toolbar:
+    buttons: list_bank_branches_toolbar
+    search:
+        prompt: 'backend::lang.list.search_prompt'
+recordOnClick: "$.popup({ handler: 'onUpdateForm', extraData: { mode: 'bank_branches', record_id: ':id' } })"

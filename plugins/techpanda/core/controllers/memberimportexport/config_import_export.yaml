@@ -1,0 +1,15 @@
+# ===================================
+#  Import/Export Behavior Config
+# ===================================
+
+import:
+    title: Import Member
+    modelClass: Techpanda\Core\Models\MemberImport
+    list: $/techpanda/core/models/memberimport/columns.yaml
+    redirect: backend/users
+
+export:
+    title: Export Users
+    modelClass: Techpanda\Core\Models\MemberImport
+    list: $/techpanda/core/models/memberimport/columns.yaml
+    redirect: backend/users

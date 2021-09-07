@@ -1,0 +1,15 @@
+fields:
+    from_date:
+        label: From
+        mode: date
+        span: storm
+        cssClass: 'col-md-2'
+        required: 1
+        type: datepicker
+    to_date:
+        label: To
+        mode: date
+        span: storm
+        cssClass: 'col-md-2'
+        required: 1
+        type: datepicker

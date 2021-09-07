@@ -1,0 +1,9 @@
+# ===================================
+#  Import/Export Behavior Config
+# ===================================
+
+import:
+    title: Import Bank Statement
+    modelClass: Techpanda\Core\Models\BankStatementImport
+    list: $/techpanda/core/models/bankstatementimport/columns.yaml
+    redirect: techpanda/core/transactions

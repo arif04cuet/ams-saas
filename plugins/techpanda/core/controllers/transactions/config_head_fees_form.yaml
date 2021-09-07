@@ -1,0 +1,10 @@
+name: Head Fees
+form: $/techpanda/core/models/headfee/fields.yaml
+modelClass: Techpanda\Core\Models\HeadFee
+defaultRedirect: techpanda/core/headfees
+create:
+    redirect: 'techpanda/core/headfees/update/:id'
+    redirectClose: techpanda/core/headfees
+update:
+    redirect: techpanda/core/headfees
+    redirectClose: techpanda/core/headfees

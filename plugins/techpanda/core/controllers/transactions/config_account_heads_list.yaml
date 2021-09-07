@@ -1,0 +1,12 @@
+list: $/techpanda/core/models/accounthead/columns.yaml
+modelClass: Techpanda\Core\Models\AccountHead
+title: Account Heads
+noRecordsMessage: 'backend::lang.list.no_records'
+showSetup: false
+showCheckboxes: false
+recordsPerPage: 20
+toolbar:
+    buttons: list_account_head_toolbar
+    search:
+        prompt: 'backend::lang.list.search_prompt'
+recordOnClick: "$.popup({ handler: 'onUpdateForm', extraData: { mode: 'account_heads', record_id: ':id' } })"

@@ -1,0 +1,12 @@
+list: $/techpanda/core/models/headfee/columns.yaml
+modelClass: Techpanda\Core\Models\HeadFee
+title: Head Fees
+noRecordsMessage: 'backend::lang.list.no_records'
+showSetup: true
+showCheckboxes: true
+recordsPerPage: 20
+toolbar:
+    buttons: list_head_fee_toolbar
+    search:
+        prompt: 'backend::lang.list.search_prompt'
+recordOnClick: "$.popup({ handler: 'onUpdateForm', extraData: { mode: 'head_fees', record_id: ':id' } })"

@@ -1,0 +1,14 @@
+list: $/techpanda/core/models/transaction/columns.yaml
+modelClass: Techpanda\Core\Models\Transaction
+title: Transactions
+noRecordsMessage: 'backend::lang.list.no_records'
+showSetup: true
+showCheckboxes: false
+recordsPerPage: 20
+toolbar:
+    buttons: list_toolbar
+    search:
+        prompt: 'backend::lang.list.search_prompt'
+#recordUrl: 'techpanda/core/transactions/update/:id'
+recordOnClick: "$.popup({ handler: 'onViewTransaction', extraData: { record_id: ':id' } })"
+filter: config_transaction_filter.yaml

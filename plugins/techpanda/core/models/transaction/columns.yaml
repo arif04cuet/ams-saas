@@ -1,0 +1,41 @@
+columns:
+    title:
+        label: 'Fiscal Year'
+        sortable: false
+        searchable: true
+    created_at:
+        label: 'Submited On'
+        type: datetime
+        ignoreTimezone: true
+        format: d/m/Y h:i:s A
+    tnx_date:
+        label: 'Tnx Date'
+        type: datetime
+        ignoreTimezone: true
+        format: d/m/Y
+    amount:
+        label: amount
+        type: number
+        sortable: false
+        format: %.0f Tk
+    status:
+        label: Status
+        type: partial
+    full_name:
+        label: Member
+        type: partial
+        sortable: false
+    login:
+        label: Member Id
+        relation: user
+        select: login
+        searchable: true
+    is_online:
+        label: 'Is Online'
+        type: switch
+        sortable: false
+    approved_by:
+        label: Approved By
+        relation: approver
+        select: first_name
+        sortable: false

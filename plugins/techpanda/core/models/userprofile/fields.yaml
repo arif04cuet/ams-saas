@@ -1,0 +1,22 @@
+fields:
+    id:
+        label: ID
+        disabled: true
+        type: text
+    kids:
+        label: Kids
+        prompt: 'Add new'
+        span: auto
+        type: repeater
+        form:
+            fields:
+                name:
+                    label: Name
+                    span: auto
+                    type: text
+                dob:
+                    label: 'Date of Birth'
+                    span: auto
+                    mode: date
+                    yearRange: '[2000,2020]'
+                    type: datepicker

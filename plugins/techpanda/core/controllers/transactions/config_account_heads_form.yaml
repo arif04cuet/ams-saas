@@ -1,0 +1,10 @@
+name: Account Head
+form: $/techpanda/core/models/accounthead/fields.yaml
+modelClass: Techpanda\Core\Models\AccountHead
+defaultRedirect: techpanda/core/accountheads
+create:
+    redirect: 'techpanda/core/accountheads/update/:id'
+    redirectClose: techpanda/core/accountheads
+update:
+    redirect: techpanda/core/accountheads
+    redirectClose: techpanda/core/accountheads

@@ -1,0 +1,18 @@
+.logo{
+    text-decoration:none!important;
+}
+
+.mainmenu{
+        
+}
+.mainmenu li{
+    display:inline;
+    padding: 0 10px;
+}
+
+#layout-content{
+    
+    min-height:300px;    
+    margin-top: 10px;
+}
+

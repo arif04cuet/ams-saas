@@ -1,0 +1,43 @@
+<div id="loading" style="display: none;" class="loading-indicator-container">
+    <div class="loading-indicator">
+        <span></span>
+        <div>Working...</div>
+    </div>
+</div>
+
+<form enctype="multipart/form-data" data-request-validate data-request-flash class="form-inline">
+
+    <?= Form::token() ?>
+    <?= Form::sessionKey() ?>
+
+    <div class="form-group">
+        <label class="">From</label><br>
+        <input type="date" class="form-control" name="from" required>
+    </div>
+    <div class="form-group">
+        <label class="" for="exampleInputPassword3">To</label><br>
+        <input type="date" class="form-control" name="to" required>
+    </div>
+
+    <button data-request-loading="#loading" data-request="onSubmitStatementRequest" data-attach-loading
+        class="btn btn-primary">Get Statement</button>
+</form>
+
+<form data-request-validate data-request-flash class="form-inline">
+
+    <?= Form::token() ?>
+    <?= Form::sessionKey() ?>
+
+
+    <div class="form-group">
+        <label class="" for="exampleInputPassword3">Fiscal Year</label><br>
+        <select class="form-control" name="fiscal-year" id="">
+            <?php foreach($fiscalYears as $year):?>
+            <option value="<?= $year?>"><?= $year ?></option>
+            <?php endforeach;?>
+        </select>
+    </div>
+
+    <button data-request-loading="#loading" data-request="onSubmitDepositStatementRequest" data-attach-loading
+        class="btn btn-primary">Get Deposit Certificate</button>
+</form>

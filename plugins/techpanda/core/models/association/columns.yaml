@@ -1,0 +1,29 @@
+columns:
+    name:
+        label: Name
+        type: text
+        searchable: true
+        
+    establishment:
+        label: Establishment
+        type: date
+        clickable: false
+    address:
+        label: Address
+        type: text
+        clickable: false
+    status:
+        label: Active
+        type: switch
+        clickable: false
+    logo:
+        label: Logo
+        type: partial
+        sortable: false
+        clickable: false
+
+    action:
+        label: Actions
+        type: partial
+        sortable: false
+        clickable: false

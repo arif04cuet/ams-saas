@@ -1,0 +1,11 @@
+
+scopes:
+
+    transaction_date:
+        label: Transaction Date
+        type: daterange
+        conditions: transaction_date >= ':after' AND transaction_date <= ':before'
+    is_matched:
+        label: Matched
+        type: checkbox
+        conditions: is_matched in (:filtered)

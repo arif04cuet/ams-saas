@@ -1,0 +1,24 @@
+items:
+    -
+        title: 'Static age'
+        nesting: null
+        type: all-static-pages
+        url: null
+        code: ''
+        reference: null
+        cmsPage: null
+        replace: 1
+        viewBag:
+            isHidden: '0'
+            cssClass: ''
+            isExternal: '0'
+    -
+        title: 'Online Application'
+        type: cms-page
+        code: ''
+        reference: online-application
+        viewBag:
+            isHidden: '0'
+            cssClass: ''
+            isExternal: '0'
+name: 'Main Menu'

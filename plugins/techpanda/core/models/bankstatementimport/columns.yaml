@@ -1,0 +1,28 @@
+columns:
+    transaction_date:
+        label: transaction_date
+        type: date
+    value_date:
+        label: value_date
+        type: date
+    transaction_ref_number:
+        label: transaction_ref_number
+        type: text
+    user_ref_number:
+        label: user_ref_number
+        type: text
+    description:
+        label: description
+        type: text
+    transaction_branch_code:
+        label: transaction_branch_code
+        type: text
+    debit:
+        label: debit
+        type: text
+    credit:
+        label: credit
+        type: text
+    balance:
+        label: balance
+        type: text

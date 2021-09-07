@@ -1,0 +1,80 @@
+<script>
+    jQuery(document).ready(function($) {
+        
+        $('#contents').DataTable({
+            "paging": false,
+            responsive: true
+        });
+    } );
+
+</script>
+
+
+<div class="row">
+    <div class="col-md-7">
+        <div class="scoreboard">
+            <div data-control="toolbar">
+
+                <div class="scoreboard-item title-value">
+                    <h4>Total Notifications</h4>
+                    <p class="positive"><?= $contents->count();?></p>
+                    <p class="description">Total Notifications</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+         
+            <table class="table display responsive nowrap" id="contents" width="100%">
+                <thead>
+                    <tr>
+            
+                        <th>Pdf</th>
+                        <th>Title</th>
+                        <th>Date</th>
+                        <th>Type</th>
+                        
+            
+                    </tr>
+                </thead>
+                <tbody>
+                <?php foreach($contents as $item): ?>
+            
+                    <tr>
+                        <td>
+                            <?php if($item->files):?>
+
+                                <?php foreach ($item->files as $file) :?>
+                                    <a href="<?= $file->getPath()?>">
+                                        
+                                        <i class="fas fa-2x fa-file-pdf" style="color: brown;"></i>
+                                    </a>
+                                <?php endforeach; ?>
+
+                            <?php endif; ?>
+                        </td>
+                        <td>
+                            <a 
+                            data-control="popup"
+                            data-handler="onLoadSingleContent",
+                            data-request-data="id:<?=$item->id?>"
+                            href="#">
+                                <?= $item->title?>
+                            </a>
+                            
+                        </td>
+                        <td><?= $item->created_at ?></td>
+                        <td><?= $item->category->title?></td>
+                    </tr>
+            
+                <?php endforeach; ?>
+                </tbody>
+            
+            </table>
+            
+        </div>
+    </div>
+</div>

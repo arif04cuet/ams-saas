@@ -1,0 +1,46 @@
+<div class="callout fade in callout-info">
+
+    <div class="content">
+        <?php if($association->logo) : ?>
+        <img src="<?= $association->logo->getThumb(200,300)?>" alt="">
+        <hr>
+        <?php endif; ?>
+
+        <h5><?= $association->name ?></h5>
+
+        <p> - <?= $association->slogan ?> </p>
+
+        <p>- Total Members : <?= $association->members->count()?></p>
+
+        <p>- <?= $association->description ?> </p>
+
+        <?php if ($user->hasAccess('techpanda.core.update_association')): ?>
+        <div>
+            <a href="<?= Backend::url('techpanda/core/association/update',['id'=>$association->id])?>"
+                class="btn btn-primary">Update</a>
+
+        </div>
+
+        <?php endif ?>
+    </div>
+</div>
+
+<div class="callout fade in callout-info">
+    <div class="content bank-info">
+        <h4>Bank Information</h4>
+        <p><b>BCS (P60 FTC) Cooperative Society Ltd</b></p>
+        <p>Saving Account Number: <b>114.151.0095905</b></p>
+        <p>Bank Name: <b>Dutch Bangla Bank Ltd</b></p>
+        <p>Branch: <b>Mohakhali, Dhaka</b></p>
+        <p>Routing Number: <b>090263194</b></p>
+    </div>
+</div>
+
+<div class="callout fade in callout-info">
+    <div class="content">
+        <h4>Technical Hotline</h4>
+        <p>Arif Hossain</p>
+        <p><a href="tel:01717348147">01717348147</a> </p>
+        <p><a href="mailto:arif04cuet@gmail.com">arif04cuet@gmail.com</a> </p>
+    </div>
+</div>

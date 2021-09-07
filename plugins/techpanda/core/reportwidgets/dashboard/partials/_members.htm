@@ -1,0 +1,47 @@
+<script>
+    jQuery(document).ready(function ($) {
+        console.log($('#members'));
+        $('#members').DataTable({
+            "paging": false,
+            responsive: true
+        });
+    });
+
+</script>
+
+
+<div class="scoreboard">
+    <div data-control="toolbar">
+
+        <div class="scoreboard-item title-value">
+            <h4>Total Members</h4>
+            <p class="positive"><?= $members->count()?></p>
+            <p class="description">Total Members</p>
+        </div>
+
+
+    </div>
+</div>
+
+<table class="table display responsive nowrap" id="members" width="100%">
+    <thead>
+        <tr>
+
+            <th>Photo</th>
+            <th>Member #</th>
+            <th>Name</th>
+            <th>Mobile</th>
+            <th>Cadre</th>
+            <th><i class="fas fa-eye"></i></th>
+
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach($members as $k=>$member): ?>
+
+        <?= $this->makePartial('member', ['member' => $member]) ?>
+
+        <?php endforeach; ?>
+    </tbody>
+
+</table>

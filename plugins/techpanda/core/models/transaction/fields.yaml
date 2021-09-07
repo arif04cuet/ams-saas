@@ -1,0 +1,99 @@
+fields:
+    payment_details:
+        label: 'Payment Details'
+        span: full
+        type: section
+    _payment_mode:
+        label: 'Payment Mode'
+        options:
+            offline: 'Prepaid ( Cash Diposit / EFT / NexusPay etc)'
+            online: 'Online Payment Gateway ( 2.5-3.5% extra charge applicable )'
+        span: full
+        cssClass: inline-options
+        type: radio
+    offline_channel:
+        label: 'Select Channel'
+        showSearch: true
+        span: auto
+        required: 1
+        dependsOn:
+            - _payment_mode
+        type: dropdown
+    tnx_date:
+        label: 'Transaction Date'
+        mode: date
+        span: left
+        required: 1
+        dependsOn:
+            - _payment_mode
+        type: datepicker
+        ignoreTimezone: true
+    offline_value_date:
+        label: 'Value Date'
+        mode: date
+        span: right
+        required: 1
+        dependsOn:
+            - _payment_mode
+        trigger:
+            action: show
+            field: offline_channel
+            condition: 'value[ft_cd]'
+        type: datepicker
+        ignoreTimezone: true
+    offline_ab_account_no:
+        label: 'Auto Debit Account No.'
+        span: right
+        required: 1
+        dependsOn:
+            - _payment_mode
+        trigger:
+            action: show
+            field: offline_channel
+            condition: 'value[eft_auto_debit]'
+        type: text
+    offline_atmid:
+        label: 'Atm Id '
+        span: right
+        required: 1
+        dependsOn:
+            - _payment_mode
+            - offline_channel
+        type: text
+    offline_branch_id:
+        label: 'Deposit Branch'
+        emptyOption: 'Select Branch'
+        showSearch: true
+        span: left
+        required: 1
+        dependsOn:
+            - offline_channel
+            - offline_atmid
+            - _payment_mode
+        type: dropdown
+    amount:
+        label: 'Total Amount'
+        span: auto
+        required: 1
+        dependsOn:
+            - _payment_mode
+        type: number
+    receipt:
+        label: 'Receipt (image)'
+        mode: image
+        useCaption: false
+        thumbOptions:
+            mode: crop
+            extension: auto
+        span: auto
+        trigger:
+            action: hide
+            field: _payment_mode
+            condition: 'value[online]'
+        required: 1
+        type: fileupload
+    note:
+        label: Note
+        span: auto
+        size: ''
+        type: textarea

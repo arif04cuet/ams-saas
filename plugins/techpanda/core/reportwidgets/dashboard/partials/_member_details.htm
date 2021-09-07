@@ -1,0 +1,63 @@
+<div class="callout fade in callout-info sticky">
+
+    <div class="content">
+
+        <?php if ($user->avatar): ?>
+        <img src="<?= $user->avatar->getThumb(250,250)?>" alt="">
+        <?php else: ?>
+        <i class="fas fa-10x fa-user-tie"></i>
+        <?php endif; ?>
+
+        <hr>
+
+        <div class="member-details">
+
+            <h5><?= $user->first_name .' '.$user->last_name  ?></h5>
+
+            <?php if($user->login):?>
+            <div>- # <?= $user->login ?></div>
+            <?php endif; ?>
+
+            <?php if($user->cadre):?>
+            <div>- <?= $user->cadre ?></div>
+            <?php endif; ?>
+            <?php if($user->designation):?>
+            <div>- <?= $user->designation ?></div>
+            <?php endif; ?>
+
+            <?php if($user->section):?>
+            <div>- <?= $user->section ?></div>
+            <?php endif; ?>
+
+            <?php if($user->office_name):?>
+            <div>- <?= $user->office_name ?></div>
+            <?php endif; ?>
+
+
+            <?php if($user->word_address):?>
+            <div>- <?= $user->word_address ?></div>
+            <?php endif; ?>
+
+
+            <?php if($user->email):?>
+            <div>- <i class="fas fa-envelope"></i> <a href="mailto:<?= $user->email ?>"><?= $user->email ?></a>
+            </div>
+            <?php endif; ?>
+
+            <?php if($user->mobile):?>
+            <div>-
+                <i class="fas fa-phone"></i> <a href="tel:<?= $user->mobile ?>"><?= $user->mobile?></a>
+            </div>
+            <?php endif; ?>
+
+
+        </div>
+
+        <br>
+        <?php if ($loggedIn):?>
+        <div>
+            <a href="<?= Backend::url('backend/users/myaccount')?>" class="btn btn-primary">Update</a>
+        </div>
+        <?php endif; ?>
+    </div>
+</div>

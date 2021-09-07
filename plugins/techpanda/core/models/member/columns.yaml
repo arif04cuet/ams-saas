@@ -1,0 +1,56 @@
+# ===================================
+#  Column Definitions
+# ===================================
+
+columns:
+
+    first_name:
+        label: backend::lang.user.first_name
+        searchable: true
+        invisible: true
+
+    last_name:
+        label: backend::lang.user.last_name
+        searchable: true
+        invisible: true
+
+    login:
+        label: backend::lang.user.login
+        searchable: true
+        width: 15%
+
+    full_name:
+        label: backend::lang.user.full_name
+        select: concat(first_name, ' ', last_name)
+        searchable: true
+  
+    email:
+        label: backend::lang.user.email
+        searchable: true
+    last_login:
+        label: backend::lang.user.last_login
+        searchable: true
+        type: datetime
+
+    created_at:
+        label: backend::lang.user.created_at
+        searchable: true
+        invisible: true
+        type: datetime
+
+    updated_at:
+        label: backend::lang.user.updated_at
+        searchable: true
+        invisible: true
+        type: datetime
+
+    deleted_at:
+        label: backend::lang.user.deleted_at
+        searchable: true
+        invisible: true
+        type: datetime
+
+    is_activated:
+        label: backend::lang.user.activated
+        invisible: true
+        type: switch

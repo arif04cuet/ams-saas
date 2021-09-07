@@ -1,0 +1,147 @@
+tabs:
+    fields:
+        name:
+            label: Name
+            span: auto
+            required: 1
+            type: text
+            tab: Information
+        slogan:
+            label: Slogan
+            span: auto
+            type: text
+            tab: Information
+        establishment:
+            label: Establishment
+            mode: date
+            span: auto
+            required: 1
+            type: datepicker
+            tab: Information
+        bank:
+            label: 'Operating Bank'
+            nameFrom: name
+            descriptionFrom: description
+            span: auto
+            type: relation
+            tab: Information
+        description:
+            label: 'Mission & Vision'
+            size: small
+            span: auto
+            type: richeditor
+            tab: Information
+        address:
+            label: Address
+            size: small
+            span: right
+            type: textarea
+            tab: Information
+        logo:
+            label: Logo
+            mode: image
+            imageWidth: '200'
+            useCaption: true
+            thumbOptions:
+                mode: crop
+                extension: auto
+            span: auto
+            type: fileupload
+            tab: Information
+        documents:
+            label: Documents
+            mode: file
+            useCaption: true
+            thumbOptions:
+                mode: crop
+                extension: auto
+            span: auto
+            type: fileupload
+            tab: Information
+        status:
+            label: Status
+            span: auto
+            default: 1
+            type: switch
+            tab: Information
+        email:
+            label: Email
+            span: auto
+            required: 1
+            type: text
+            comment: 'various notifications (member paid, member registration etc) will sent to this email'
+            tab: Information
+        is_enable_sms:
+            label: 'Enable SMS Service'
+            span: auto
+            type: checkbox
+            tab: 'Sms Configuration'
+        sms_gateway:
+            label: 'SMS Gateway'
+            options:
+                smsbuzzbd: smsbuzzbd.com
+            showSearch: true
+            span: left
+            required: 1
+            trigger:
+                action: show
+                field: is_enable_sms
+                condition: checked
+            type: dropdown
+            tab: 'Sms Configuration'
+        sms_api_key:
+            label: 'Sms Api Key'
+            span: auto
+            trigger:
+                action: show
+                field: is_enable_sms
+                condition: checked
+            type: text
+            tab: 'Sms Configuration'
+        sms_username:
+            label: 'SMS Username'
+            span: auto
+            required: 1
+            trigger:
+                action: show
+                field: is_enable_sms
+                condition: checked
+            type: text
+            tab: 'Sms Configuration'
+        sms_password:
+            label: 'SMS Password'
+            span: auto
+            required: 1
+            trigger:
+                action: show
+                field: is_enable_sms
+                condition: checked
+            type: text
+            tab: 'Sms Configuration'
+        sms_schedule:
+            label: 'Schedule Sms'
+            prompt: 'Add new item'
+            span: full
+            type: repeater
+            tab: 'Sms Configuration'
+            form:
+                fields:
+                    day_of_month:
+                        label: 'Day Of Month'
+                        span: storm
+                        cssClass: col-md-4
+                        required: 1
+                        type: number
+                        comment: 'example: 9'
+                    time:
+                        label: Time
+                        mode: time
+                        span: storm
+                        cssClass: col-md-4
+                        type: datepicker
+                    message:
+                        label: Message
+                        span: storm
+                        size: ''
+                        cssClass: col-md-4
+                        type: textarea

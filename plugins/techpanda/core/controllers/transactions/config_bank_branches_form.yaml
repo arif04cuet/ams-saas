@@ -1,0 +1,10 @@
+name: Branches
+form: $/techpanda/core/models/bankbranch/fields.yaml
+modelClass: Techpanda\Core\Models\BankBranch
+defaultRedirect: techpanda/core/bankbranches
+create:
+    redirect: 'techpanda/core/bankbranchs/update/:id'
+    redirectClose: techpanda/core/bankbranches
+update:
+    redirect: techpanda/core/bankbranches
+    redirectClose: techpanda/core/bankbranches

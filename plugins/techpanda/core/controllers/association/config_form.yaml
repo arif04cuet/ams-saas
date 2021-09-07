@@ -1,0 +1,10 @@
+name: Association
+form: $/techpanda/core/models/association/fields.yaml
+modelClass: Techpanda\Core\Models\Association
+defaultRedirect: techpanda/core/association
+create:
+    redirect: 'techpanda/core/association/update/:id'
+    redirectClose: techpanda/core/association
+update:
+    redirect: techpanda/core/association
+    redirectClose: techpanda/core/association

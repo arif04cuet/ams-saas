@@ -1,0 +1,10 @@
+name: Categories
+form: $/techpanda/core/models/category/fields.yaml
+modelClass: Techpanda\Core\Models\Category
+defaultRedirect: techpanda/core/categories
+create:
+    redirect: 'techpanda/core/categories/update/:id'
+    redirectClose: techpanda/core/categories
+update:
+    redirect: techpanda/core/categories
+    redirectClose: techpanda/core/categories

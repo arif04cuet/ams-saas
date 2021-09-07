@@ -1,0 +1,15 @@
+list: $/techpanda/core/models/member/application_columns.yaml
+modelClass: Backend\Models\User
+title: backend::lang.user.list_title
+noRecordsMessage: 'backend::lang.list.no_records'
+recordUrl: backend/users/update/:id
+showSetup: true
+showCheckboxes: true
+recordsPerPage: 20
+defaultSort:
+    column: created_at
+    direction: desc
+toolbar:
+    buttons: $/techpanda/core/controllers/members/applications/_list_toolbar.htm
+    search:
+        prompt: 'backend::lang.list.search_prompt'

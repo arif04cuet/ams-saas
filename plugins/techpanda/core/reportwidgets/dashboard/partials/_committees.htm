@@ -1,0 +1,77 @@
+<div class="scoreboard">
+    <div data-control="toolbar">
+
+        <div class="scoreboard-item title-value">
+            <h4>Total Committee</h4>
+            <p class="positive"><?= $association->committees->count()?></p>
+            <p class="description">Total Committee</p>
+        </div>
+
+
+    </div>
+</div>
+
+
+<?php foreach($association->committees as $k=>$committee): ?>
+
+<br>
+<div class="row">
+    <div class="col-md-8">
+        <h3 style="margin: 0;"><?= $committee->name ?></h3>
+    </div>
+    <div class="col-md-4">
+        <p>
+            <b><?= $committee->valid_from->format('d-m-Y') ?></b> to
+            <b><?= $committee->valid_to->format('d-m-Y') ?></b>
+        </p>
+    </div>
+</div>
+
+
+<br>
+<table class="table">
+
+    <tr>
+
+        <th>Photo</th>
+        <th>Name</th>
+        <th>Role</th>
+        <th>Email</th>
+        <th>Mobile</th>
+        <th></th>
+
+    </tr>
+
+    <?php foreach($committee['members'] as $member): ?>
+    <?php $memberDetails = $association->members->find($member['member'])?>
+    <tr>
+
+        <td>
+            <?php if ($memberDetails->avatar): ?>
+            <img src="<?= $memberDetails->avatar->getThumb(80,60)?>" alt="">
+            <?php else: ?>
+            <i class="fas text-success fa-4x fa-user-tie"></i>
+            <?php endif; ?>
+
+        </td>
+        <td>
+            <?= $memberDetails->first_name ?>
+            <?= $memberDetails->last_name ?>
+        </td>
+        <td><?= $member['role'] ?></td>
+        <td><?= $memberDetails->email ?></td>
+        <td><?= $memberDetails->mobile ?></td>
+
+        <td> <a href="" data-request-update="member_details: '#memberDetails'" data-request="onViewMember"
+                data-request-data="login:'<?= $memberDetails->login ?>'">
+
+                <i class=" fas fa-arrow-right"></i></a></td>
+
+
+    </tr>
+    <?php endforeach; ?>
+
+
+</table>
+
+<?php endforeach; ?>

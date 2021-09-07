@@ -1,0 +1,51 @@
+fields:
+    name:
+        label: Name
+        span: auto
+        required: 1
+        type: text
+    code:
+        label: Code
+        span: auto
+        required: 1
+        preset:
+            field: name
+            type: slug
+        type: text
+    valid_from:
+        label: 'Valid From'
+        mode: date
+        span: auto
+        required: 1
+        type: datepicker
+    valid_to:
+        label: 'Valid To'
+        span: auto
+        mode: date
+        required: 1
+        type: datepicker
+    body:
+        label: Responsibilities
+        size: small
+        span: full
+        type: richeditor
+    members:
+        label: Members
+        prompt: 'Add Member'
+        span: full
+        type: repeater
+        required: 1
+        form:
+            fields:
+                member:
+                    label: Member
+                    showSearch: true
+                    span: auto
+                    required: 1
+                    type: dropdown
+                role:
+                    label: Role
+                    span: auto
+                    default: Member
+                    required: 1
+                    type: text

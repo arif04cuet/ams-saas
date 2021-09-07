@@ -1,0 +1,16 @@
+fields:
+    name:
+        label: Name
+        span: auto
+        required: 1
+        type: text
+    code:
+        label: Code
+        span: auto
+        required: 1
+        type: text
+    address:
+        label: Address
+        span: full
+        size: ''
+        type: textarea

@@ -1,0 +1,35 @@
+# ===================================
+#  Column Definitions
+# ===================================
+
+columns:
+
+    login:
+        label: Tacking Number
+        searchable: true
+        sortable: false
+
+    full_name:
+        label: techpanda.core::lang.member.fullname_en
+        select: concat(first_name, ' ', last_name)
+        searchable: true
+        sortable: false
+    cadre:
+        label: techpanda.core::lang.member.cadre
+        sortable: false
+    mobile:
+        label: techpanda.core::lang.member.mobile
+        searchable: true
+        sortable: false
+    email:
+        label: techpanda.core::lang.member.email
+        searchable: true
+        sortable: false
+    designation:
+        label: techpanda.core::lang.member.designation
+        searchable: true
+        sortable: false
+    created_at:
+        label: Date
+        type: date
+        sortable: false

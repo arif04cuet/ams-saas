@@ -1,0 +1,76 @@
+# ===================================
+#  Column Definitions
+# ===================================
+
+columns:
+
+    first_name:
+        label: backend::lang.user.first_name
+        searchable: true
+        invisible: true
+        sortable: false
+
+    last_name:
+        label: backend::lang.user.last_name
+        searchable: true
+        invisible: true
+        sortable: false
+
+    login:
+        label: backend::lang.user.login
+        searchable: true
+        sortable: true
+
+    full_name:
+        label: techpanda.core::lang.member.fullname_en
+        select: concat(first_name, ' ', last_name)
+        searchable: true
+        sortable: false
+
+    fullname_bn:
+        label: techpanda.core::lang.member.fullname_bn
+        searchable: true
+        sortable: false
+    cadre:
+        label: techpanda.core::lang.member.cadre
+        sortable: false
+    mobile:
+        label: techpanda.core::lang.member.mobile
+        searchable: true
+        sortable: false
+    email:
+        label: techpanda.core::lang.member.email
+        searchable: true
+        sortable: false
+    designation:
+        label: techpanda.core::lang.member.designation
+        searchable: true
+        sortable: false
+    section:
+        label: techpanda.core::lang.member.section
+        sortable: false
+
+    work_address:
+        label: techpanda.core::lang.member.work_address
+        sortable: false
+
+
+    created_at:
+        label: backend::lang.user.created_at
+        searchable: true
+        invisible: true
+        type: datetime
+        sortable: false
+
+    member_role:
+        label: Role
+        relation: role
+        select: name
+        sortable: false
+        invisible: true
+
+    last_login:
+        label: backend::lang.user.last_login
+        sortable: false
+        type: datetime
+        invisible: true

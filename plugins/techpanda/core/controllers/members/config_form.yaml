@@ -1,0 +1,16 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+name: backend::lang.user.name
+form: $/techpanda/core/models/member/1/fields.yaml
+modelClass: Backend\Models\User
+defaultRedirect: backend/users
+
+create:
+    redirect: backend/users/update/:id
+    redirectClose: backend/users
+
+update:
+    redirect: backend/users
+    redirectClose: backend/users

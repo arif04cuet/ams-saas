@@ -1,0 +1,35 @@
+<?php if(request('type') == 'success') :?>
+
+<p data-control="flash-message" data-interval="5" class="success">
+    Your payment has been successfully completed.
+</p>
+
+<?php endif; ?>
+
+<?php if(in_array(request('type'),['fail','cancel'])) :?>
+
+<p data-control="flash-message" data-interval="5" class="error">
+    Something went wrong. pls try again later.
+</p>
+
+<?php endif; ?>
+
+
+
+
+<form enctype="multipart/form-data" data-request-validate data-request-flash>
+    <?= Form::token() ?>
+    <?= Form::sessionKey() ?>
+
+    <?= $form->render() ?>
+
+    <button data-control="popup" data-handler="onSubmitTnx" class="btn btn-primary" data-attach-loading>
+        Submit Now
+
+    </button>
+
+
+    <?= Form::close() ?>
+
+    <br>
+    <br>

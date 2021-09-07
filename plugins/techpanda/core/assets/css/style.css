@@ -1,0 +1,15 @@
+.report-container > ul .item .content .edit-widget,
+.report-container > ul .item .content .close,
+.report-container > ul .item .content .drag-handle,
+#ReportContainer-container-toolbar{
+    display: none !important;
+}
+
+.report-container > ul .item .content h6
+{
+    margin: 10px 0 5px 0;
+}
+
+.member-details div{
+    font-size: 16px;
+}

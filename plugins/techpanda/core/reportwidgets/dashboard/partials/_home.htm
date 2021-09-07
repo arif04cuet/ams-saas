@@ -1,0 +1,30 @@
+<br>
+
+<div class="scoreboard">
+    <div data-control="toolbar">
+
+        <div class="scoreboard-item title-value">
+            <h4>Comments</h4>
+            <p class="positive"><?= number_format($heads['monthly-deposit-savings']); ?> Tk</p>
+            <p class="description">Total Savings</p>
+        </div>
+
+        <div class="scoreboard-item title-value">
+            <h4>Comments</h4>
+            <p class="positive"><?= number_format($totalShare); ?> Tk</p>
+            <p class="description">Total Share value</p>
+        </div>
+
+
+
+
+    </div>
+</div>
+
+<div class="">
+
+    <?= $this->makePartial('statement_form') ?>
+
+</div>
+<br>
+<?= $tnx_list->render();?>

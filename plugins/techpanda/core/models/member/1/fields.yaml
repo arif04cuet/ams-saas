@@ -1,0 +1,268 @@
+# ===================================
+#  Field Definitions
+# ===================================
+
+fields:
+    is_superuser:
+        context: [create, update]
+        tab: backend::lang.user.permissions
+        label: backend::lang.user.superuser
+        type: switch
+        comment: backend::lang.user.superuser_comment
+
+tabs:
+    defaultTab: backend::lang.user.account
+    icons:
+        backend::lang.user.account: icon-user
+        backend::lang.user.groups: icon-users
+        backend::lang.user.permissions: icon-key
+        techpanda.core::lang.member.personal_info: icon-user
+        techpanda.core::lang.member.family_info: icon-user
+        techpanda.core::lang.member.address: icon-user
+
+    fields:
+        login:
+            span: left
+            label: backend::lang.user.login
+
+        email:
+            span: right
+            type: email
+            label: backend::lang.user.email
+
+        send_invite:
+            context: create
+            type: checkbox
+            label: backend::lang.user.send_invite
+            comment: backend::lang.user.send_invite_comment
+            default: true
+
+        first_name:
+            span: left
+            label: techpanda.core::lang.member.fullname_en
+            required: 1
+
+        fullname_bn:
+            span: right
+            label: techpanda.core::lang.member.fullname_bn
+
+
+        mobile:
+            label: techpanda.core::lang.member.mobile
+            span: left
+            required: 1
+
+        cadre:
+            label: techpanda.core::lang.member.cadre
+            span: right
+
+        designation:
+            label: techpanda.core::lang.member.designation
+            span: left
+
+        section:
+            label: techpanda.core::lang.member.section
+            span: right
+        office_name:
+            label: techpanda.core::lang.member.office_name
+            span: left
+
+        _initial_balance:
+            label: Initial Balance
+            type: partial
+            path: $/techpanda/core/models/member/partials/_initial_balance.htm
+            span: right
+
+        initial_balance:
+            label: Initial Balance
+            prompt: 'Add new'
+            span: right
+            type: repeater
+            permissions:
+                - techpanda.core.manage_transactions
+            maxItems: 2
+            form:
+                fields:
+                    head:
+                        label: Head
+                        span: auto
+                        type: dropdown
+
+                    amount:
+                        label: Amount
+                        span: auto
+                        type: number
+
+        password:
+            type: password
+            span: left
+            label: backend::lang.user.password
+
+        password_confirmation:
+            type: password
+            span: left
+            label: backend::lang.user.password_confirmation
+
+        role:
+            context: [create, update]
+            label: backend::lang.user.role_field
+            commentAbove: backend::lang.user.role_comment
+            type: radio
+            default: 1
+
+        profile[dob]:
+            context: [myaccount,update]
+            label: techpanda.core::lang.member.dob
+            type: datepicker
+            span: left
+            mode: date
+            yearRange: '[1960,1990]'
+            tab: techpanda.core::lang.member.personal_info
+            comment: 'format 01/01/1970'
+        profile[blood_group]:
+            context: [myaccount,update]
+            label: Blood Group
+            span: right
+            tab: techpanda.core::lang.member.personal_info
+
+        profile[sex]:
+            context: [myaccount,update]
+            label: Sex
+            type: dropdown
+            options:
+                Male: Male
+                Female: Female
+            span: left
+            tab: techpanda.core::lang.member.personal_info
+
+        profile[nid]:
+            context: [myaccount,update]
+            label: NID
+            span: right
+            tab: techpanda.core::lang.member.personal_info
+        profile[marital_status]:
+            context: [myaccount,update]
+            label: Marital Status
+            type: dropdown
+            options:
+                Married: Married
+                Unmarried: Unmarried
+            span: left
+            tab: techpanda.core::lang.member.family_info
+
+        profile[spouse_name]:
+            context: [myaccount,update]
+            label: Spouse Name
+            span: right
+            tab: techpanda.core::lang.member.family_info
+        profile[kids]:
+            context: [myaccount,update]
+            label: Kids
+            prompt: 'Add new'
+            span: left
+            tab: techpanda.core::lang.member.family_info
+            type: repeater
+            form:
+                fields:
+                    name:
+                        label: Name
+                        span: auto
+                        type: text
+                    dob:
+                        label: 'Date of Birth'
+                        span: auto
+                        mode: date
+                        yearRange: '[2000,2020]'
+                        type: datepicker
+        profile[nominee_name]:
+            context: [myaccount,update]
+            label: Nominee's Name
+            tab: techpanda.core::lang.member.family_info
+            span: auto
+        profile[nominee_nid]:
+            context: [myaccount,update]
+            label: Nominee's NID
+            tab: techpanda.core::lang.member.family_info
+            span: auto
+        profile[nominee_relation]:
+            context: [myaccount,update]
+            label: Relationship with Nominee
+            tab: techpanda.core::lang.member.family_info
+            span: auto
+
+        user_present_address:
+            context: [myaccount,update]
+            label: Present Address
+            type: section
+            tab: techpanda.core::lang.member.address
+
+        profile[present_house_no]:
+            context: [myaccount,update]
+            label: Present Hourse Number
+            tab: techpanda.core::lang.member.address
+            span: auto
+        profile[present_road_no]:
+            context: [myaccount,update]
+            label: Present Road Number
+            tab: techpanda.core::lang.member.address
+            span: auto
+        profile[present_address]:
+            context: [myaccount,update]
+            label: Present Address
+            tab: techpanda.core::lang.member.address
+            span: auto
+        profile[present_post_code]:
+            context: [myaccount,update]
+            label: Present Post Code
+            tab: techpanda.core::lang.member.address
+            span: auto
+        profile[present_phone]:
+            context: [myaccount,update]
+            label: Present Phone
+            tab: techpanda.core::lang.member.address
+            span: auto
+        user_permanent_address:
+            context: [myaccount,update]
+            label: Permanent Address
+            type: section
+            tab: techpanda.core::lang.member.address
+
+        profile[permanent_house_no]:
+            context: [myaccount,update]
+            label: Permanent Hourse Number
+            tab: techpanda.core::lang.member.address
+            span: auto
+        profile[permanent_road_no]:
+            context: [myaccount,update]
+            label: Permanent Road Number
+            tab: techpanda.core::lang.member.address
+            span: auto
+        profile[permanent_address]:
+            context: [myaccount,update]
+            label: Permanent Address
+            tab: techpanda.core::lang.member.address
+            span: auto
+        profile[permanent_post_code]:
+            context: [myaccount,update]
+            label: Permanent Post Code
+            tab: techpanda.core::lang.member.address
+            span: auto
+        profile[permanent_phone]:
+            context: [myaccount,update]
+            label: Permanent Phone
+            tab: techpanda.core::lang.member.address
+            span: auto
+
+
+secondaryTabs:
+    fields:
+        btn_impersonate:
+            label: ''
+            context: [myaccount,update]
+            type: partial
+        avatar:
+            label: backend::lang.user.avatar
+            type: fileupload
+            mode: image
+            imageHeight: 250
+            imageWidth: 250

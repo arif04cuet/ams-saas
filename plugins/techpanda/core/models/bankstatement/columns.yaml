@@ -1,0 +1,64 @@
+columns:
+    is_matched:
+        label: "Matched ? "
+        type: partial
+        path: $/techpanda/core/models/bankstatement/_is_matched.htm
+        clickable: false
+        sortable: false
+
+    transaction_date:
+        label: transaction_date
+        type: date
+        clickable: false
+        searchable: true
+        sortable: true
+
+    value_date:
+        label: value_date
+        type: date
+        sortable: false
+        clickable: false
+        searchable: true
+    transaction_ref_number:
+        label: trans_ref_number
+        type: text
+        sortable: false
+        clickable: false
+        searchable: true
+    # user_ref_number:
+    #     label: user_ref_number
+    #     type: text
+    #     sortable: false
+    #     clickable: false
+    #     searchable: true
+    description:
+        label: description
+        type: text
+        sortable: false
+        clickable: false
+        searchable: true
+    transaction_branch_code:
+        label: branch_code
+        type: text
+        sortable: false
+        clickable: false
+        searchable: true
+
+    credit:
+        label: credit
+        type: text
+        sortable: false
+        clickable: false
+        searchable: true
+    balance:
+        label: balance
+        type: text
+        sortable: false
+        clickable: false
+        searchable: true
+    created_at:
+        label: created_at
+        type: datetime
+        sortable: false
+        clickable: false
+        searchable: true

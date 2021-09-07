@@ -1,0 +1,10 @@
+name: Committees
+form: $/techpanda/core/models/committee/fields.yaml
+modelClass: Techpanda\Core\Models\Committee
+defaultRedirect: techpanda/core/committees
+create:
+    redirect: 'techpanda/core/committees/update/:id'
+    redirectClose: techpanda/core/committees
+update:
+    redirect: techpanda/core/committees
+    redirectClose: techpanda/core/committees

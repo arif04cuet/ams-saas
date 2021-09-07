@@ -1,0 +1,12 @@
+list: $/techpanda/core/models/committee/columns.yaml
+modelClass: Techpanda\Core\Models\Committee
+title: Committees
+noRecordsMessage: 'backend::lang.list.no_records'
+showSetup: true
+showCheckboxes: true
+recordsPerPage: 20
+toolbar:
+    buttons: list_toolbar
+    search:
+        prompt: 'backend::lang.list.search_prompt'
+recordUrl: 'techpanda/core/committees/update/:id'

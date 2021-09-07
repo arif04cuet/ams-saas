@@ -1,0 +1,47 @@
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="popup">&times;</button>
+    <h4 class="modal-title">Total Members UnPaid : <?= $users->count()?> </h4>
+</div>
+
+
+<div class="modal-body">
+
+    <div class="row">
+        <?= Form::open(['id' => 'sendSms']) ?>
+        <div class="col-md-12"><Textarea name="msg" class="w-full"></Textarea></div>
+        <div class="col-md-6">
+            <button data-dismiss="popup" class="btn btn-primary" data-request="onSendSms">
+                Send SMS to All
+            </button>
+        </div>
+        <?= Form::close() ?>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <td>Name</td>
+                <td>Cadre</td>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            <?php foreach($users as $user ):?>
+
+            <tr>
+                <td><?= $user->full_name ?></td>
+
+                <td><?= $user->cadre?></td>
+            </tr>
+
+            <?php endforeach;?>
+
+
+        </tbody>
+
+
+    </table>
+</div>
+<div class="modal-footer">
+
+</div>

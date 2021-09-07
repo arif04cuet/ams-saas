@@ -1,0 +1,10 @@
+name: Contents
+form: $/techpanda/core/models/content/fields.yaml
+modelClass: Techpanda\Core\Models\Content
+defaultRedirect: techpanda/core/contents
+create:
+    redirect: 'techpanda/core/contents/update/:id'
+    redirectClose: techpanda/core/contents
+update:
+    redirect: techpanda/core/contents
+    redirectClose: techpanda/core/contents

@@ -1,0 +1,10 @@
+name: Transactions
+form: $/techpanda/core/models/transaction/fields.yaml
+modelClass: Techpanda\Core\Models\Transaction
+defaultRedirect: techpanda/core/transactions
+create:
+    redirect: 'techpanda/core/transactions/update/:id'
+    redirectClose: techpanda/core/transactions
+update:
+    redirect: techpanda/core/transactions
+    redirectClose: techpanda/core/transactions

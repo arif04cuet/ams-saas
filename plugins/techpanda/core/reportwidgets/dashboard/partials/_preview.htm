@@ -1,0 +1,123 @@
+<?= Form::open(['id' => 'createForm']) ?>
+
+<input type="hidden" name="id" value="<?= $transaction->id ?>" />
+
+<div class="modal-header">
+    <!-- <button type="button" class="close" data-dismiss="popup">&times;</button> -->
+    <!-- <h4 class="modal-title"><?= $transaction->tnx_id ?> </h4> -->
+</div>
+
+
+
+<div class="modal-body">
+
+    <h4>Payment Details</h4>
+    <table class="table">
+
+        <tr>
+            <td>Payment Channel </td>
+            <td><?= $transaction->getOfflineChannelByCode($transaction->offline_channel)?></td>
+        </tr>
+
+        <tr>
+            <td>Transaction Date </td>
+            <td><?= date("d/m/Y", strtotime($transaction->tnx_date)) ?></td>
+        </tr>
+
+
+        <?php if($transaction->offline_value_date) : ?>
+        <tr>
+            <td>Value Date </td>
+            <td><?= date("d/m/Y", strtotime($transaction->offline_value_date)) ?></td>
+        </tr>
+        <?php endif; ?>
+
+
+
+        <?php if($transaction->offline_atmid) : ?>
+        <tr>
+            <td>ATM Id </td>
+            <td><?= $transaction->offline_atmid ?></td>
+        </tr>
+        <?php endif; ?>
+
+
+        <?php if($transaction->offline_branch_id) : ?>
+        <tr>
+            <td>Branch</td>
+            <td><?= $transaction->getBranch()->name .' - '. $transaction->getBranch()->code ?></td>
+        </tr>
+        <?php endif; ?>
+
+
+        <tr>
+            <td>Total Amount </td>
+            <td><?= number_format($transaction->amount)?></td>
+        </tr>
+
+
+
+        <?php if($transaction->receipt) : ?>
+        <tr>
+            <td>Receipt </td>
+            <td>
+                <a target="__blank" href="<?= $transaction->receipt->getPath()?>">
+
+                    <img src="<?= $transaction->receipt->getPath()?>" alt="" width="200" height="150">
+                </a>
+            </td>
+        </tr>
+        <?php endif; ?>
+
+
+        <?php if($transaction->note) : ?>
+        <tr>
+            <td>Note</td>
+            <td><?= $transaction->note ?></td>
+        </tr>
+        <?php endif; ?>
+
+
+
+
+    </table>
+
+    <hr>
+
+    <h4>Head Details</h4>
+    <table class="table">
+
+        <tr>
+            <th>Head</th>
+            <th>Fee</th>
+            <th>Month / Quantity</th>
+            <th>Total</th>
+        </tr>
+        <?php foreach($transaction->headfees as $item):?>
+        <tr>
+            <td><?= $item->head->name ?></td>
+            <td><?= $item->fee?></td>
+            <td><?= $transaction->getQuantityValue($item) ?></td>
+            <td><?= number_format($item->pivot->total) ?></td>
+        </tr>
+        <?php endforeach;?>
+    </table>
+
+
+
+
+</div>
+<div class="modal-footer">
+
+    <button type="submit" data-request="onPreviewSubmit" data-popup-load-indicator class="btn btn-primary">
+        Confirm & Submit
+    </button>
+
+    <button type="submit" data-request="onCancelPreview" data-popup-load-indicator class="btn btn-primary">
+        <?= e(trans('backend::lang.form.cancel')) ?>
+    </button>
+
+
+</div>
+
+<?= Form::close() ?>

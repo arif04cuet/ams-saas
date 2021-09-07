@@ -1,0 +1,9 @@
+# ===================================
+#  Import/Export Behavior Config
+# ===================================
+
+import:
+    title: Import Bank Branch
+    modelClass: Techpanda\Core\Models\BankBranchImport
+    list: $/techpanda/core/models/bankbranchimport/columns.yaml
+    redirect: techpanda/core/transactions

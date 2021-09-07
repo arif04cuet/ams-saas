@@ -1,0 +1,13 @@
+<?php if(isset($model->initial_balance) and is_array($model->initial_balance)) : ?>
+
+<ul style="list-style: none;padding-left: 10px;">
+
+    <?php foreach($model->initial_balance as $item) : ?>
+    <li><?= (\Techpanda\Core\Models\AccountHead::getSavingHeadName() == $item['head']) ? 'Savings': ucfirst($item['head'])?>
+        :
+        <?= $item['amount']?></li>
+    <?php endforeach?>
+
+</ul>
+
+<?php endif; ?>

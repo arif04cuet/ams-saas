@@ -1,0 +1,188 @@
+1.0.1:
+    - 'Initialize plugin.'
+1.0.2:
+    - 'Created table techpanda_core_associations'
+    - builder_table_create_techpanda_core_associations.php
+1.0.3:
+    - 'Updated table techpanda_core_associations'
+    - builder_table_update_techpanda_core_associations.php
+1.0.4:
+    - 'Updated table techpanda_core_associations'
+    - builder_table_update_techpanda_core_associations_2.php
+1.0.5:
+    - 'Updated table techpanda_core_associations'
+    - builder_table_update_techpanda_core_associations_3.php
+1.0.6:
+    - 'add fielnds to backend users tables'
+    - migration106.php
+1.0.7:
+    - 'Created table techpanda_core_committee'
+    - builder_table_create_techpanda_core_committee.php
+1.0.8:
+    - 'Updated table techpanda_core_committee'
+    - builder_table_update_techpanda_core_committee.php
+1.0.9:
+    - 'Updated table techpanda_core_committee'
+    - builder_table_update_techpanda_core_committee_2.php
+1.0.10:
+    - 'make association_id field nullable in backend_users'
+    - migration1010.php
+1.0.11:
+    - 'add roles'
+    - seeder1011.php
+1.0.12:
+    - 'add more fields to backend user table'
+    - migration1012.php
+1.0.13:
+    - 'add fields to backend user tables'
+    - migration1013.php
+1.0.14:
+    - 'added user profile tables'
+    - create_user_profiles_table.php
+1.0.15:
+    - 'add user_id to profile table'
+    - migration1015.php
+1.0.16:
+    - 'Created table techpanda_core_content_categories'
+    - builder_table_create_techpanda_core_content_categories.php
+1.0.17:
+    - 'Created table techpanda_core_contents'
+    - builder_table_create_techpanda_core_contents.php
+1.0.18:
+    - 'Updated table techpanda_core_contents'
+    - builder_table_update_techpanda_core_contents.php
+1.0.19:
+    - 'Updated table techpanda_core_contents'
+    - builder_table_update_techpanda_core_contents_2.php
+1.0.20:
+    - 'Updated table techpanda_core_content_categories'
+    - builder_table_update_techpanda_core_content_categories.php
+1.0.21:
+    - 'Updated table techpanda_core_contents'
+    - builder_table_update_techpanda_core_contents_3.php
+1.0.22:
+    - 'Updated table techpanda_core_associations'
+    - builder_table_update_techpanda_core_associations_4.php
+1.0.23:
+    - 'Updated table techpanda_core_associations'
+    - builder_table_update_techpanda_core_associations_5.php
+1.0.24:
+    - 'Updated table techpanda_core_associations'
+    - builder_table_update_techpanda_core_associations_6.php
+1.0.25:
+    - 'Created table techpanda_core_account_heads'
+    - builder_table_create_techpanda_core_account_heads.php
+1.0.26:
+    - 'Created table techpanda_core_head_fees'
+    - builder_table_create_techpanda_core_head_fees.php
+1.0.27:
+    - 'Created table techpanda_core_transactions'
+    - builder_table_create_techpanda_core_transactions.php
+1.0.28:
+    - 'Created table techpanda_core_bank_statements'
+    - create_bank_statements_table.php
+1.0.29:
+    - 'Updated table techpanda_core_transactions'
+    - builder_table_update_techpanda_core_transactions.php
+1.0.30:
+    - 'Created table techpanda_core_bank_branches'
+    - builder_table_create_techpanda_core_bank_branches.php
+1.0.31:
+    - 'Updated table techpanda_core_bank_branches'
+    - builder_table_update_techpanda_core_bank_branches.php
+1.0.32:
+    - 'Updated table techpanda_core_bank_branches'
+    - builder_table_update_techpanda_core_bank_branches_2.php
+1.0.33:
+    - 'Updated table techpanda_core_bank_branches'
+    - builder_table_update_techpanda_core_bank_branches_3.php
+1.0.34:
+    - 'Created table techpanda_core_banks'
+    - builder_table_create_techpanda_core_banks.php
+1.0.35:
+    - 'add DBBL bank'
+    - seeder1035.php
+1.0.36:
+    - 'Updated table techpanda_core_associations'
+    - builder_table_update_techpanda_core_associations_7.php
+1.0.37:
+    - 'Updated table techpanda_core_transactions'
+    - builder_table_update_techpanda_core_transactions_2.php
+1.0.38:
+    - 'Updated table techpanda_core_transactions'
+    - builder_table_update_techpanda_core_transactions_3.php
+1.0.39:
+    - 'Updated table techpanda_core_transactions'
+    - builder_table_update_techpanda_core_transactions_4.php
+1.0.40:
+    - 'Updated table techpanda_core_account_heads'
+    - builder_table_update_techpanda_core_account_heads.php
+1.0.41:
+    - 'Updated table techpanda_core_account_heads'
+    - builder_table_update_techpanda_core_account_heads_2.php
+1.0.42:
+    - 'Created table techpanda_core_transaction_head'
+    - builder_table_create_techpanda_core_transaction_head.php
+1.0.43:
+    - 'Updated table techpanda_core_transaction_head'
+    - builder_table_update_techpanda_core_transaction_head.php
+1.0.44:
+    - 'Updated table techpanda_core_transaction_head'
+    - builder_table_update_techpanda_core_transaction_head_2.php
+1.0.45:
+    - 'Updated table techpanda_core_transaction_head'
+    - builder_table_update_techpanda_core_transaction_head_3.php
+1.0.46:
+    - 'Created table techpanda_core_monthly_savings'
+    - builder_table_create_techpanda_core_monthly_savings.php
+1.0.47:
+    - 'Updated table techpanda_core_transactions'
+    - builder_table_update_techpanda_core_transactions_5.php
+1.0.48:
+    - 'Updated table techpanda_core_bank_branches'
+    - builder_table_update_techpanda_core_bank_branches_4.php
+1.0.49:
+    - 'Updated table techpanda_core_head_fees'
+    - builder_table_update_techpanda_core_head_fees.php
+1.0.50:
+    - 'Updated table techpanda_core_head_fees'
+    - builder_table_update_techpanda_core_head_fees_2.php
+1.0.51:
+    - 'Updated table techpanda_core_transactions'
+    - builder_table_update_techpanda_core_transactions_6.php
+1.0.52:
+    - 'Updated table techpanda_core_transactions'
+    - builder_table_update_techpanda_core_transactions_7.php
+1.0.53:
+    - 'Updated table techpanda_core_transactions'
+    - builder_table_update_techpanda_core_transactions_8.php
+1.0.54:
+    - 'Updated table techpanda_core_transactions'
+    - builder_table_update_techpanda_core_transactions_9.php
+1.0.55:
+    - 'Updated table techpanda_core_associations'
+    - builder_table_update_techpanda_core_associations_8.php
+1.0.56:
+    - 'Updated table techpanda_core_transactions'
+    - builder_table_update_techpanda_core_transactions_10.php
+1.0.57:
+    - 'Updated table techpanda_core_transactions'
+    - builder_table_update_techpanda_core_transactions_11.php
+1.0.58:
+    - 'Updated table techpanda_core_transactions'
+    - builder_table_update_techpanda_core_transactions_12.php
+1.0.59:
+    - 'add initial balanced'
+    - migration1059.php
+1.0.60:
+    - 'Updated table techpanda_core_transactions'
+    - builder_table_update_techpanda_core_transactions_13.php
+1.0.61:
+    - 'Updated table techpanda_core_head_fees'
+    - builder_table_update_techpanda_core_head_fees_3.php
+1.0.62:
+    - 'Updated table techpanda_core_account_heads'
+    - builder_table_update_techpanda_core_bank_statements.php
+1.0.63:
+    - 'Updated table techpanda_core_bank_statements'
+    - builder_table_update_techpanda_core_account_heads3.php

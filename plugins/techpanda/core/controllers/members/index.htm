@@ -1,0 +1,34 @@
+<div class="control-tabs content-tabs tabs-flush members" data-control="tab">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#members">
+                Members (
+                <?= $member_total ?> )
+            </a></li>
+        <li><a href="#applications">
+                Online Applications (
+                <?= $application_total ?> )
+            </a></li>
+        <li><a href="#associate">
+                Associate Members (
+                <?= $associate_total ?> )
+            </a></li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane active">
+            <?= $this->listRender('members') ?>
+        </div>
+        <div class="tab-pane">
+            <?= $this->listRender('applications') ?>
+        </div>
+
+        <div class="tab-pane">
+            <?= $this->listRender('associates') ?>
+        </div>
+
+    </div>
+</div>
+<style>
+    .members span.title>span {
+        max-width: 100% !important;
+    }
+</style>

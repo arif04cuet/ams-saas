@@ -1,0 +1,9 @@
+columns:
+    name:
+        label: Name
+    code:
+        label: Code
+    bank_id:
+        label: Bank Id
+    address:
+        label: Address

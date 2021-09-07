@@ -1,0 +1,99 @@
+<div class="row">
+    <div class="col-md-3">
+
+        <?= $this->makePartial('leftbar', ['association' => $association]) ?>
+
+    </div>
+
+    <div class="col-md-6 ">
+
+
+        <div class="control-tabs content-tabs" data-control="tab">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#contentTabOne">Home</a></li>
+                <li class="diposit-now"><a href="#deposit">Deposit Now</a></li>
+                <li><a href="#contentTabTwo">Members</a></li>
+                <li><a href="#contentTabThree">Committees</a></li>
+                <li><a href="#inbox">Inbox</a></li>
+
+
+
+            </ul>
+            <div class="tab-content" style="background-color: white;padding:10px">
+                <br>
+                <div class="tab-pane active">
+                    <?php //date("d/m/Y H:i:s")?>
+
+                    <?= $this->makePartial('home', [
+                        'tnx_list' => $tnx_list,
+                        'user' => $user,
+                        'heads' => $heads,
+                        'totalShare'=>$totalShare
+                    ])
+                    ?>
+
+                </div>
+
+
+                <div class="tab-pane">
+
+                    <?php if(date('d') <= 10 OR 1) :?>
+
+                    <?= $this->makePartial('tnx_form', [
+                            'form' => $tnx_form
+                        ]) ?>
+
+                    <?php else: ?>
+
+                    <p><?= Lang::get('techpanda.core::lang.message.deposit_form_showing_text');?></p>
+
+                    <?php endif; ?>
+
+                </div>
+
+
+                <div class="tab-pane">
+
+                    <?= $this->makePartial('members', ['members' => $members]) ?>
+
+                </div>
+
+                <div class="tab-pane">
+
+                    <?= $this->makePartial('committees', ['association' => $association]) ?>
+
+                </div>
+
+                <div class="tab-pane">
+
+                    <?= $this->makePartial('contents', ['contents' => $contents]) ?>
+
+                </div>
+
+
+
+
+            </div>
+        </div>
+
+
+
+    </div>
+
+    <div class="col-md-3" id="memberDetails">
+
+
+    </div>
+
+</div>
+
+<script> $.request('onViewMember') </script>
+
+<style>
+    .sticky {
+
+        position: fixed;
+        top: 10;
+        right: 10;
+    }
+</style>

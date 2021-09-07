@@ -1,0 +1,13 @@
+columns:
+    name:
+        label: name
+        type: text
+    members:
+        label: Total Members
+        type: partial
+    valid_from:
+        label: valid_from
+        type: text
+    valid_to:
+        label: valid_to
+        type: text

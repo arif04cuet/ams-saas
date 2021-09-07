@@ -1,0 +1,13 @@
+list: $/techpanda/core/models/bankstatement/columns.yaml
+modelClass: Techpanda\Core\Models\BankStatement
+title: Bank Statement
+noRecordsMessage: 'backend::lang.list.no_records'
+showSetup: true
+showCheckboxes: true
+recordsPerPage: 20
+toolbar:
+    buttons: list_bank_statements_toolbar
+    search:
+        prompt: 'backend::lang.list.search_prompt'
+recordOnClick: "$.popup({ handler: 'onUpdateForm', extraData: { mode: 'bank_statements', record_id: ':id' } })"
+filter: config_bank_statement_filter.yaml

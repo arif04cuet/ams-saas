@@ -1,0 +1,22 @@
+columns:
+    year:
+        label: year
+        type: text
+        searchable: true
+
+    month:
+        label: Month
+        type: partial
+        searchable: true
+
+    name:
+        label: Head
+        relation: head
+        select: name
+        sortable: false
+    fee:
+        label: fee
+        type: text
+        sortable: false,
+        searchable: true
+

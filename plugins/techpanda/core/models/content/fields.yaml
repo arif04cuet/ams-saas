@@ -1,0 +1,33 @@
+fields:
+    title:
+        label: Title
+        span: full
+        required: 1
+        type: text
+    body:
+        label: Body
+        size: large
+        span: full
+        type: richeditor
+    files:
+        label: Attachments
+        mode: file
+        useCaption: true
+        thumbOptions:
+            mode: crop
+            extension: auto
+        span: auto
+        fileTypes: 'pdf,doc,docx'
+        type: fileupload
+    category:
+        label: Category
+        nameFrom: title
+        descriptionFrom: description
+        emptyOption: Select
+        span: auto
+        required: 1
+        type: relation
+    send_members:
+        label: 'Notify all members via email'
+        span: auto
+        type: checkbox

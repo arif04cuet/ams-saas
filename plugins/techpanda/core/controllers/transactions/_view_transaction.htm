@@ -1,0 +1,126 @@
+<?= Form::open(['id' => 'createForm']) ?>
+
+<input type="hidden" name="id" value="<?= $transaction->id ?>" />
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="popup">&times;</button>
+    <!-- <h4 class="modal-title"><?= $transaction->tnx_id ?> </h4> -->
+</div>
+
+
+
+<div class="modal-body">
+
+    <h4>Payment Details</h4>
+    <table class="table">
+        <tr>
+            <th width="30%">Fiscal Year</th>
+            <td><?= $transaction->title?></td>
+        </tr>
+
+        <tr>
+            <th width="30%">Payment Status </th>
+            <td><?= $transaction->status?></td>
+        </tr>
+
+        <?php if($channel = $transaction->offline_channel) : ?>
+        <tr>
+            <th>Channel </th>
+            <td><?= $transaction->getOfflineChannelByCode($channel) ?></td>
+        </tr>
+        <?php endif; ?>
+
+        <tr>
+            <th>Transaction Date </th>
+            <td><?= date("d/m/Y",strtotime($transaction->tnx_date))?></td>
+        </tr>
+
+        <?php if($valueDate = $transaction->offline_value_date) : ?>
+        <tr>
+            <th>Value Date </th>
+            <td><?= date("d/m/Y",strtotime($valueDate))?></td>
+        </tr>
+        <?php endif; ?>
+
+
+        <tr>
+            <th>Total Amount </th>
+            <td><?= number_format($transaction->amount)?></td>
+        </tr>
+        <tr>
+            <th>Payment Method </th>
+            <td><?= $transaction->is_online ? 'Online Payment Gateway': 'Tranditional' ?></td>
+        </tr>
+
+        <?php if(!$transaction->is_online) : ?>
+        <tr>
+            <th>Branch </th>
+            <td><?= $transaction->getBranch()->name .' - '. $transaction->getBranch()->code ?></td>
+        </tr>
+        <?php endif; ?>
+
+        <?php if($transaction->receipt) : ?>
+        <tr>
+            <th>Receipt </th>
+            <td>
+                <a target="__blank" href="<?= $transaction->receipt->getPath()?>">
+
+                    <img src="<?= $transaction->receipt->getPath()?>" alt="" width="200" height="150">
+                </a>
+            </td>
+        </tr>
+        <?php endif; ?>
+
+        <?php if($transaction->note) : ?>
+        <tr>
+            <th>Note</th>
+            <td><?= $transaction->note ?></td>
+        </tr>
+        <?php endif; ?>
+
+    </table>
+
+    <hr>
+
+    <h4>Head Details</h4>
+    <table class="table">
+
+        <tr>
+            <th>Head</th>
+            <th>Fee</th>
+            <th>Month / Quantity</th>
+            <th>Total</th>
+        </tr>
+        <?php foreach($transaction->headfees as $item):?>
+        <tr>
+            <td><?= $item->head->name ?></td>
+            <td><?= $item->fee?></td>
+            <td><?= $transaction->getQuantityValue($item) ?></td>
+            <td><?= number_format($item->pivot->total) ?></td>
+        </tr>
+        <?php endforeach;?>
+    </table>
+
+
+
+
+</div>
+<div class="modal-footer">
+
+    <button type="submit" data-request="onStatusUpdate" data-request-data="status: 'paid'"
+        data-request-data="redirect:0" data-hotkey="ctrl+s, cmd+s" data-popup-load-indicator class="btn btn-primary">
+        Approve
+    </button>
+
+    <button type="submit" data-request="onStatusUpdate" data-request-data="status: 'rejected'"
+        data-request-data="redirect:0" data-hotkey="ctrl+s, cmd+s" data-popup-load-indicator class="btn btn-danger"
+        style="background-color: red;color: white;">
+        Reject
+    </button>
+
+    <button type="button" class="btn btn-default" data-dismiss="popup">
+        <?= e(trans('backend::lang.form.cancel')) ?>
+    </button>
+</div>
+
+<?= Form::close() ?>

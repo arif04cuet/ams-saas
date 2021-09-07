@@ -1,0 +1,76 @@
+plugin:
+    name: 'techpanda.core::lang.plugin.name'
+    description: 'techpanda.core::lang.plugin.description'
+    author: Techpanda
+    icon: oc-icon-adjust
+    homepage: ''
+permissions:
+    techpanda.core.manage_association:
+        tab: MIS
+        label: 'Manage Associations'
+    techpanda.core.manage_content:
+        tab: MIS
+        label: 'Manage Data'
+    techpanda.core.manage_committee:
+        tab: MIS
+        label: 'Manage Comitee'
+    techpanda.core.member_import_export:
+        tab: MIS
+        label: 'Member Import/Export'
+    techpanda.core.manage_widgets:
+        tab: MIS
+        label: 'Manage Dashboard Widget'
+    'techpanda.core.*':
+        tab: MIS
+        label: 'Manage MIS'
+    techpanda.core.update_association:
+        tab: MIS
+        label: 'Update Association'
+    techpanda.core.manage_contents:
+        tab: MIS
+        label: 'Manage Contents'
+    techpanda.core.manage_transactions:
+        tab: MIS
+        label: 'Manage Transations'
+    techpanda.core.manage_heads:
+        tab: MIS
+        label: 'Manage Account Heads'
+    techpanda.core.manage_head_fees:
+        tab: MIS
+        label: 'Manage Heads Fees'
+    techpanda.core.staement_import_export:
+        tab: MIS
+        label: 'Manage Statement Import'
+    techpanda.core.bank_branch_import_export:
+        tab: MIS
+        label: 'Upload Bank Branch'
+navigation:
+    main-menu-mis:
+        label: MIS
+        url: techpanda/core/transactions
+        icon: icon-life-ring
+        permissions:
+            - 'techpanda.core.*'
+        sideMenu:
+            side-menu-member:
+                label: Members
+                url: /backend/users
+                icon: icon-sitemap
+                permissions:
+                    - techpanda.core.backend.manage_users
+            side-menu-transaction:
+                label: 'Cash Management'
+                url: techpanda/core/transactions
+                icon: icon-sitemap
+                permissions:
+                    - techpanda.core.manage_transactions
+            side-menu-item2:
+                label: 'Loan Management'
+                url: /
+                icon: icon-sitemap
+            side-menu-content:
+                label: Contents
+                url: techpanda/core/contents
+                icon: icon-sitemap
+                permissions:
+                    - techpanda.core.manage_contents

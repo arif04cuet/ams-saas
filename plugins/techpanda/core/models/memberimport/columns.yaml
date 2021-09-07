@@ -1,0 +1,31 @@
+# ===================================
+#  Column Definitions
+# ===================================
+
+columns:
+
+    first_name:
+        label: backend::lang.user.first_name
+
+    last_name:
+        label: backend::lang.user.last_name
+        searchable: true
+        invisible: true
+    login:
+        label: backend::lang.user.login
+        searchable: true
+        width: 15%
+    email:
+        label: backend::lang.user.email
+        searchable: true
+    mobile:
+        label: Mobile
+    cadre:
+        label: Cadre
+    association_id:
+        label: Association ID
+    role_id:
+        label: Role ID
+        
+
+            
