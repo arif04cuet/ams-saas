@@ -1,10 +1,7 @@
 <div style="display: flex;justify-content: space-between;">
-    <h4>Current Month - <?= date('F') ?></h4>
-    <div data-control="toolbar" style="width: 12%;">
-        <a target="__blank" href="<?= Backend::url('techpanda/core/transactions/downloadExcel') ?>"
-            class="btn btn-primary oc-icon-upload">Excel Report </a>
-    </div>
-
+    <h4>Current Month -
+        <?= date('F') ?>
+    </h4>
 </div>
 
 <hr>
@@ -21,7 +18,9 @@
 
                 <li data-color="<?= Techpanda\Core\Models\Transaction::statusColors($item['status']) ?>">
                     <?= ucfirst(str_replace('_',' ',$item['status'])); ?>
-                    <span><?= $item['total_count']; ?></span>
+                    <span>
+                        <?= $item['total_count']; ?>
+                    </span>
                 </li>
                 <?php endforeach;?>
 
@@ -29,7 +28,9 @@
                     Not Submitted
                     <span>
                         <a href="#" data-control="popup" data-handler="onShowUnpaidUsers"
-                            data-request-data="mode: 'account_heads'"><?= $this->unPaid()['members']?></a>
+                            data-request-data="mode: 'account_heads'">
+                            <?= $this->unPaid()['members']?>
+                        </a>
                     </span>
                 </li>
 
@@ -47,13 +48,17 @@
 
                 <li data-color="<?= Techpanda\Core\Models\Transaction::statusColors($item['status']) ?>">
                     <?= ucfirst(str_replace('_',' ',$item['status'])); ?> Amount
-                    <span><?= number_format($item['total_amount']); ?> Tk.</span>
+                    <span>
+                        <?= number_format($item['total_amount']); ?> Tk.
+                    </span>
                 </li>
                 <?php endforeach;?>
 
                 <li data-color="red">
                     Not Submitted Amount
-                    <span><?= $this->unPaid()['unpaid_amount']?> Tk.</span>
+                    <span>
+                        <?= $this->unPaid()['unpaid_amount']?> Tk.
+                    </span>
                 </li>
 
 

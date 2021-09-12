@@ -5,6 +5,7 @@
         <li><a href="#accountheads">Account Heads</a></li>
         <li><a href="#bankstatement">Bank Statements</a></li>
         <li><a href="#bankbranches">Bank Branches</a></li>
+        <li><a href="#reports">Reports</a></li>
 
     </ul>
     <div class="tab-content">
@@ -26,6 +27,11 @@
         <div class="tab-pane">
             <?= $this->listRender('bank_branches') ?>
         </div>
+
+        <div class="tab-pane">
+            <?= $this->makePartial('reports')?>
+        </div>
+
 
     </div>
 </div>

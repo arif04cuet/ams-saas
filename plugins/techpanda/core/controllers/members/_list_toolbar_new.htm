@@ -12,77 +12,64 @@
         Committees
     </a>
     <?php endif ?>
-    
+
     <?php if ($this->user->isSuperUser()): ?>
-        <a href="<?= Backend::url('backend/userroles') ?>" class="btn btn-default oc-icon-address-card">
-            <?= e(trans('backend::lang.user.role.list_title')) ?>
-        </a>
+    <a href="<?= Backend::url('backend/userroles') ?>" class="btn btn-default oc-icon-address-card">
+        <?= e(trans('backend::lang.user.role.list_title')) ?>
+    </a>
     <?php endif ?>
     <a href="<?= Backend::url('backend/usergroups') ?>" class="btn btn-default oc-icon-group">
         <?= e(trans('backend::lang.user.group.list_title')) ?>
     </a>
-    
+
     <div class="btn-group">
 
-        <button
-            onclick="$(this).data('request-data', {
+        <button onclick="$(this).data('request-data', {
                 checked: $('.control-list').listWidget('getChecked')
-            })"
-            data-request="onDelete"
-            data-request-confirm="<?= e(trans('rainlab.user::lang.users.delete_selected_confirm')) ?>"
-            class="btn btn-default oc-icon-trash-o"
-            disabled="disabled"
-            data-trigger-action="enable"
-            data-trigger=".control-list input[type=checkbox]"
-            data-trigger-condition="checked">Delete</button>
+            })" data-request="onClose" data-request-confirm="Close account for selected members ?"
+            class="btn btn-default oc-icon-trash-o" disabled="disabled" data-trigger-action="enable"
+            data-trigger=".control-list input[type=checkbox]" data-trigger-condition="checked">Close Account</button>
     </div>
-    
+
 
 
     <div class="btn-group dropdown dropdown-fixed" data-control="bulk-actions">
-        <button
-            data-primary-button
-            type="button"
-            class="btn btn-default"
-            data-request="exportaddress::onExportAddress"
-            data-trigger-action="enable"
-            data-trigger=".control-list input[type=checkbox]"
+        <button data-primary-button type="button" class="btn btn-default" data-request="exportaddress::onExportAddress"
+            data-trigger-action="enable" data-trigger=".control-list input[type=checkbox]"
             data-trigger-condition="checked"
             data-request-success="$(this).prop('disabled', true).next().prop('disabled', true)"
             data-stripe-load-indicator>
-           Bulk Action
+            Bulk Action
         </button>
-        <button
-            type="button"
-            class="btn btn-default dropdown-toggle"
-            data-trigger-action="enable"
-            data-trigger=".control-list input[type=checkbox]"
-            data-trigger-condition="checked"
-            data-toggle="dropdown">
+        <button type="button" class="btn btn-default dropdown-toggle" data-trigger-action="enable"
+            data-trigger=".control-list input[type=checkbox]" data-trigger-condition="checked" data-toggle="dropdown">
             <span class="caret"></span>
         </button>
         <ul class="dropdown-menu" data-dropdown-title="<?= e(trans('rainlab.user::lang.users.bulk_actions')) ?>">
-           
+
             <li>
-                <a href="javascript:;" class="oc-icon-user-plus" data-action="office" data-confirm="Generate Office Address">
+                <a href="javascript:;" class="oc-icon-user-plus" data-action="office"
+                    data-confirm="Generate Office Address">
                     Output Office Address
                 </a>
             </li>
             <li role="separator" class="divider"></li>
 
             <li>
-                <a href="javascript:;" class="oc-icon-user-plus" data-action="present" data-confirm="Generate Present Address">
+                <a href="javascript:;" class="oc-icon-user-plus" data-action="present"
+                    data-confirm="Generate Present Address">
                     Output Present Address
                 </a>
             </li>
             <li role="separator" class="divider"></li>
             <li>
-                <a href="javascript:;" class="oc-icon-user-plus" data-action="permanent" data-confirm="Generate Parmanent Address">
+                <a href="javascript:;" class="oc-icon-user-plus" data-action="permanent"
+                    data-confirm="Generate Parmanent Address">
                     Output Parmanent Address
                 </a>
             </li>
-            
+
         </ul>
     </div>
-   
+
 </div>

@@ -32,4 +32,20 @@ class BackendUserTabController extends ControllerBehavior
             return $redirect;
         }
     }
+
+    public function onClose()
+    {
+
+        if (($checkedIds = post('checked')) && is_array($checkedIds) && count($checkedIds)) {
+
+            foreach ($checkedIds as $userId) {
+                User::find($userId)->update([
+                    'is_activated' => false,
+                    'deleted_at' => now()
+                ]);
+            }
+        }
+
+        return $this->controller->listRefresh();
+    }
 }

@@ -204,6 +204,7 @@ class EventsHandler
             if ($listWidget->alias === 'applications') {
 
                 $query->where('is_activated', 0);
+                $query->whereNull('deleted_at');
                 $query->where('role_id', 1);
                 $query->orderBy('created_at', 'desc');
             }
