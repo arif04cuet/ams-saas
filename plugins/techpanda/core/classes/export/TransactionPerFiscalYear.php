@@ -221,6 +221,16 @@ class TransactionPerFiscalYear implements FromArray, WithTitle, WithHeadings, Wi
         $i = 1;
         foreach ($members as $member) {
 
+            //months value
+            $months = $transaction->getPaidMonthsByFiscalYear($fiscalYear, $member->id, [Transaction::STATUS_PAID]);
+
+            if ($member->login == '61357ac79efe3')
+                traceLog($months);
+
+            //filter out close members
+            if (!$member->is_activated && empty($months))
+                continue;
+
             $row = [
                 $i,
                 $member->login,
@@ -236,8 +246,8 @@ class TransactionPerFiscalYear implements FromArray, WithTitle, WithHeadings, Wi
             $row[] = $headTotals[AccountHead::getSavingHeadName()];
             $row[] = $headTotals[AccountHead::getShareHeadName()];
 
-            //months value
-            $months = $transaction->getPaidMonthsByFiscalYear($fiscalYear, $member->id, [Transaction::STATUS_PAID]);
+
+
             foreach ($fiscalYearMonths as $my) {
 
                 list($month, $year) = explode('-', $my);

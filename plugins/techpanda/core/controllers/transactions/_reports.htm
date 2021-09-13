@@ -1,8 +1,24 @@
-<div class="toolbar-widget list-header">
-    <div>
-        <span>Full Excel Report: </span>
-        <a target="__blank" href="<?= Backend::url('techpanda/core/transactions/downloadExcel') ?>"
-            class="btn btn-primary oc-icon-upload">Export </a>
+<?php
+$fy = (new Techpanda\Core\Models\Transaction())->getFiscalYearOptions();
+?>
 
+<div class="toolbar-widget list-header ">
+
+    <div class="row">
+        <div class="col-md-6">
+            <p>Full Excel Report till Today: </p>
+            <a target="__blank" href="<?= Backend::url('techpanda/core/transactions/downloadExcel') ?>"
+                class="btn btn-primary oc-icon-upload">Export </a>
+        </div>
+        <div class="col-md-6">
+            <p>Full Excel Report till Today: </p>
+            <div>
+
+                input
+            </div>
+            <a target="__blank" href="<?= Backend::url('techpanda/core/transactions/downloadExcel') ?>"
+                class="btn btn-primary oc-icon-upload">Export </a>
+        </div>
     </div>
+
 </div>
