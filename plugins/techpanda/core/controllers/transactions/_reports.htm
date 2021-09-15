@@ -11,13 +11,41 @@ $fy = (new Techpanda\Core\Models\Transaction())->getFiscalYearOptions();
                 class="btn btn-primary oc-icon-upload">Export </a>
         </div>
         <div class="col-md-6">
-            <p>Full Excel Report till Today: </p>
+            <p>Quarterly Excel Report: </p>
             <div>
+                <form data-request-validate data-request-flash class="form-inline">
 
-                input
+                    <?= Form::token() ?>
+                    <?= Form::sessionKey() ?>
+
+
+                    <div class="form-group">
+                        <label class="" for="exampleInputPassword3">Fiscal Year</label><br>
+                        <select class="form-control" name="fiscal-year" id="">
+                            <?php foreach($fy as $year):?>
+                            <option value="<?= $year?>">
+                                <?= $year ?>
+                            </option>
+                            <?php endforeach;?>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="" for="quarter">Quarter</label><br>
+                        <select class="form-control" name="quarter" id="quarter">
+                            <option value="1">1st</option>
+                            <option value="2">2nd</option>
+                            <option value="3">3rd</option>
+                            <option value="4">4th</option>
+                        </select>
+                    </div>
+
+
+                    <button data-request-loading="#loading" data-request="onSubmitQReportRequest" data-attach-loading
+                        class="btn btn-primary">Generate Report</button>
+                </form>
             </div>
-            <a target="__blank" href="<?= Backend::url('techpanda/core/transactions/downloadExcel') ?>"
-                class="btn btn-primary oc-icon-upload">Export </a>
+
         </div>
     </div>
 

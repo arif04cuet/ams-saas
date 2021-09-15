@@ -7,8 +7,11 @@ use Backend\Classes\Controller;
 use BackendAuth;
 use BackendMenu;
 use Flash;
+use Illuminate\Http\Response as HttpResponse;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Response;
 use Queue;
+use Techpanda\Core\Classes\Export\QTransactionExport;
 use Techpanda\Core\Classes\Export\TransactionExport;
 use Techpanda\Core\Classes\Helper;
 use Techpanda\Core\Models\HeadFee;
@@ -65,6 +68,75 @@ class Transactions extends Controller
         $export = new TransactionExport(Helper::getAssociationId());
         $filename = 'transactions_' . date("Y_m_d_H_i");
         return Excel::export($export, $filename, 'xlsx');
+    }
+
+    public function onSubmitQReportRequest()
+    {
+
+        $fiscalYear = post('fiscal-year');
+        $quarter = post('quarter');
+
+        //excel export
+        $export = new QTransactionExport(Helper::getAssociationId(), $fiscalYear, $quarter);
+        $filename = 'quarterly_report_' . date("Y_m_d_H_i");
+        return HttpResponse::download(Excel::export($export, $filename, 'xlsx'));
+
+        // list($from, $to) = explode('-', $fiscalYear);
+
+        // $fiscalMonths = Transaction::getMonthsByFiscalYear($fiscalYear);
+
+        // $months = MonthlySaving::whereHas('transaction', function ($q) {
+        //     return $q->where('status', Transaction::STATUS_PAID);
+        // })->where('user_id', $user->id)
+        //     ->where(function ($q) use ($fiscalMonths) {
+        //         foreach ($fiscalMonths as $monthYear) {
+        //             list($month, $year) = explode('-', $monthYear);
+        //             $q->orWhere(function ($q) use ($year, $month) {
+        //                 $q->where('month', $month)->where('year', $year);
+        //             });
+        //         }
+        //     });
+
+
+        // $months = $months->get()->toArray();
+
+        // //sort date according to fiscal year
+
+        // usort($months, function ($a, $b) {
+        //     $dateA = "01 " . $a['month'] . " " . $a['year'];
+        //     $dateB = "01 " . $b['month'] . " " . $b['year'];
+        //     return strtotime($dateA) - strtotime($dateB);
+        // });
+
+        // $tnxFrom = $from . '-07-01';
+        // $tnxTo = $to . '-06-01';
+
+        // $totalShare = AccountHead::getShareCount($user->id, $tnxFrom, $tnxTo, false);
+
+        // // get unit value
+        // $headFee = HeadFee::whereHas('head', function ($q) {
+        //     $q->where('code', AccountHead::getSavingHeadName());
+        // })->where('year', $fiscalYear)->first();
+
+        // $monthlyFee = $headFee->fee;
+        // $total = count($months) * $monthlyFee;
+
+        // $data['fiscalYear'] = $fiscalYear;
+        // $data['months'] = $months;
+        // $data['monthlyFee'] = $monthlyFee;
+        // $data['totalShare'] = $totalShare;
+        // $data['total'] = $total;
+        // $data['user'] = $this->user->toArray();
+
+        // $data['inWords'] = (new NumberFormatter("en", NumberFormatter::SPELLOUT))->format($total);
+
+
+        // $fileName = rand() . '.pdf';
+        // $path = storage_path('temp/public/') . $fileName;
+        // $templateCode = 'deposit-certificate';
+        // $save = PDF::loadTemplate($templateCode, $data)->save($path);
+
+        // return redirect('/storage/temp/public/' . $fileName);
     }
 
     public function index()

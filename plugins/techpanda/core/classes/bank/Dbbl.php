@@ -44,7 +44,7 @@ class Dbbl
 
                 $statements = $statement
                     ->where('description', 'like', '%FT%')
-                    ->whereDate('value_date', $this->data['offline_value_date'])
+                    //->whereDate('value_date', $this->data['offline_value_date'])
                     ->get();
 
                 break;
@@ -56,7 +56,7 @@ class Dbbl
 
             case 'eft_nexuspay':
 
-                $statements = $statement->where('description', 'like', '%NEXUS PAY%')->get();
+                $statements = $statement->where('description', 'like', '%NexusPay%')->get();
                 break;
 
             case 'eft_ibanking':
@@ -65,7 +65,7 @@ class Dbbl
                 break;
 
             case 'eft_auto_debit':
-                $statements = $statement->where('offline_ab_account_no', $this->data['offline_ab_account_no'])->get();
+                $statements = $statement->where('description', 'like', '%' . $this->data['offline_ab_account_no'] . '%')->get();
 
                 break;
 
