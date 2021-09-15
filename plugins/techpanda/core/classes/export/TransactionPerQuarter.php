@@ -30,6 +30,7 @@ class TransactionPerQuarter implements FromArray, WithTitle, WithHeadings, WithE
     private $fiscalYear;
     private $quarter;
     private $tenant;
+    private $fiscalMonths;
     public const userCells = 5;
     public const balanceCells = 2;
     public const cellsforEachMonth = 2;
@@ -39,8 +40,18 @@ class TransactionPerQuarter implements FromArray, WithTitle, WithHeadings, WithE
         $this->tenant = $tenant;
         $this->fiscalYear  = $fiscalYear;
         $this->quarter  = $quarter;
+        $this->fiscalMonths = Transaction::getMonthsByFiscalYear($fiscalYear);
     }
 
+    public function getQuarterMonths($fyMonths, $quarter)
+    {
+        $monthCount = 3;
+        $offset = ($quarter - 1) * $monthCount;
+
+        $quarterMonths = array_slice($fyMonths, $offset, $monthCount);
+
+        return $quarterMonths;
+    }
     public function headings(): array
     {
 
@@ -50,7 +61,8 @@ class TransactionPerQuarter implements FromArray, WithTitle, WithHeadings, WithE
         }
 
 
-        $months = Transaction::getMonthsByFiscalYear($this->fiscalYear);
+        $months = $this->getQuarterMonths($this->fiscalMonths, $this->quarter);
+
         $monthCols = [];
 
         $startBalance = 'Balance Up to ' . date("F-Y", strtotime("-1 months", strtotime('1-' . $months[0])));
@@ -83,9 +95,11 @@ class TransactionPerQuarter implements FromArray, WithTitle, WithHeadings, WithE
     public function array(): array
     {
 
+        $quarterMonths = $this->getQuarterMonths($this->fiscalMonths, $this->quarter);
 
         $firstRow = ['Sl No.', 'Member No.', 'Name', 'Designstion', 'Mobile'];
-        for ($i = 0; $i < 14; $i++) {
+
+        for ($i = 0; $i <= count($quarterMonths); $i++) {
             $firstRow[] = 'Savings';
             $firstRow[] = 'Share';
         }
@@ -216,7 +230,7 @@ class TransactionPerQuarter implements FromArray, WithTitle, WithHeadings, WithE
         $monthSaving = 4000;
         $transaction = new Transaction();
 
-        $fiscalYearMonths = Transaction::getMonthsByFiscalYear($fiscalYear);
+        $quarterMonths = $this->getQuarterMonths($this->fiscalMonths, $this->quarter);
 
 
         //['Sl No.', 'Member No.', 'Name', 'Designstion', 'Mobile'];
@@ -242,7 +256,9 @@ class TransactionPerQuarter implements FromArray, WithTitle, WithHeadings, WithE
             ];
 
             // fiscal year opening balance
-            $firstMonth = date('Y-m-d', mktime(0, 0, 0, 6, 30, $from));
+            $fromDate = date('Y-m-d', mktime(0, 0, 0, 6, 30, $from));
+            $toDate = date('Y-m-d', mktime(0, 0, 0, 6, 30, $from));
+
             $headTotals = AccountHead::headsAmount($member->id, null, $firstMonth);
 
             $row[] = $headTotals[AccountHead::getSavingHeadName()];
@@ -250,7 +266,7 @@ class TransactionPerQuarter implements FromArray, WithTitle, WithHeadings, WithE
 
 
 
-            foreach ($fiscalYearMonths as $my) {
+            foreach ($quarterMonths as $my) {
 
                 list($month, $year) = explode('-', $my);
                 $row[] = in_array($month, $months) ? $monthSaving : 0;
