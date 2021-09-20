@@ -28,7 +28,7 @@ class Transaction extends Model
     const STATUS_UNPAID = 'unpaid';
     const STATUS_REJECTED = 'rejected';
     const STATUS_REVIEW = 'submitted_for_review';
-
+    const PER_MONTH_AMOUNT = 4000;
     const SHARE_VALUE = 100;
 
     // Payment gateway URLS
@@ -608,6 +608,10 @@ class Transaction extends Model
         return $url;
     }
 
+    public static function getPerMonthSaving()
+    {
+        return self::PER_MONTH_AMOUNT;
+    }
     public static function createSessionUrl()
     {
         return self::getGatewayUrl() . '/gwprocess/v4/api.php';

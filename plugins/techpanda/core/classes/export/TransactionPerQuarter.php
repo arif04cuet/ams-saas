@@ -265,7 +265,7 @@ class TransactionPerQuarter implements FromArray, WithTitle, WithHeadings, WithE
         $data = [];
         list($from, $to) = explode('-', $fiscalYear);
         $members = $this->tenant->members;
-        $monthSaving = 4000;
+        $monthSaving = Transaction::PER_MONTH_AMOUNT;
         $transaction = new Transaction();
 
         $quarterMonths = $this->getQuarterMonths($this->fiscalMonths, $this->quarter);
@@ -290,7 +290,7 @@ class TransactionPerQuarter implements FromArray, WithTitle, WithHeadings, WithE
                 $member->mobile
             ];
 
-
+            $userSavings = MonthlySaving::getTotalSavingsByUser($member,$allSavingsMonth,)
             // excel upto month balance
             $fyMy = explode('-', $quarterMonths[0]);
             $prevMonth = date("m", strtotime($fyMy[0] . ' last month'));
