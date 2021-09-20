@@ -12,7 +12,9 @@ use Queue;
 use Techpanda\Core\Classes\Export\QTransactionExport;
 use Techpanda\Core\Classes\Export\TransactionExport;
 use Techpanda\Core\Classes\Helper;
+use Techpanda\Core\Models\AccountHead;
 use Techpanda\Core\Models\HeadFee;
+use Techpanda\Core\Models\MonthlySaving;
 use Techpanda\Core\Models\Transaction;
 use Techpanda\Core\Traits\ListPopup;
 use Vdomah\Excel\Classes\Excel;
@@ -76,7 +78,7 @@ class Transactions extends Controller
         $quarter = request('quarter');
 
         $export = new QTransactionExport(Helper::getAssociationId(), $fiscalYear, $quarter);
-        $filename = 'quarterly_report_' . date("Y_m_d_H_i");
+        $filename = 'quarterly_report_' . $quarter . '_' . $fiscalYear;
         return Excel::export($export, $filename, 'xlsx');
     }
     public function onSubmitQReportRequest()
@@ -84,7 +86,9 @@ class Transactions extends Controller
         $fiscalYear = post('fiscal-year');
         $quarter = post('quarter');
 
-        return Backend::redirect('techpanda/core/transactions/downloadQReport?fiscalYear=' . $fiscalYear . '&quarter=' . $quarter);
+        MonthlySaving::getTotalSavings();
+        return 'done';
+        //return Backend::redirect('techpanda/core/transactions/downloadQReport?fiscalYear=' . $fiscalYear . '&quarter=' . $quarter);
     }
 
     public function index()

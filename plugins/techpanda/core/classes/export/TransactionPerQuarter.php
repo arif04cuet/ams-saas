@@ -20,6 +20,7 @@ use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use Techpanda\Core\Classes\Helper;
 use Techpanda\Core\Models\AccountHead;
 use Techpanda\Core\Models\Association;
+use Techpanda\Core\Models\MonthlySaving;
 use Techpanda\Core\Models\Transaction;
 
 class TransactionPerQuarter implements FromArray, WithTitle, WithHeadings, WithEvents, ShouldAutoSize
@@ -222,6 +223,43 @@ class TransactionPerQuarter implements FromArray, WithTitle, WithHeadings, WithE
         $event->sheet->getDelegate()->getStyle($cellRange)->applyFromArray($styleArray);
     }
 
+    public function getHeadTotals($member)
+    {
+        list($from, $to) = explode('-', $this->fiscalYear);
+
+        // fiscal year opening balance
+        $day = 30;
+        $month = 0;
+        $year = 0;
+        switch ($this->quarter) {
+            case 1:
+                $month = 6;
+                $year = $from;
+                break;
+
+            case 2:
+                $month = 9;
+                $year = $from;
+                break;
+
+            case 3:
+                $day = 31;
+                $month = 12;
+                $year = $from;
+                break;
+
+            case 4:
+                $day = 31;
+                $month = 3;
+                $year = $to;
+                break;
+        }
+
+        $firstMonth = date('Y-m-t', mktime(0, 0, 0, $month, 1, $year));
+        $headTotals = AccountHead::headsAmount($member->id, null, $year);
+
+        return $headTotals;
+    }
     public function dataByFiscalYear($fiscalYear)
     {
         $data = [];
@@ -231,7 +269,7 @@ class TransactionPerQuarter implements FromArray, WithTitle, WithHeadings, WithE
         $transaction = new Transaction();
 
         $quarterMonths = $this->getQuarterMonths($this->fiscalMonths, $this->quarter);
-
+        $allSavingsMonth = MonthlySaving::getTotalSavings();
 
         //['Sl No.', 'Member No.', 'Name', 'Designstion', 'Mobile'];
         $i = 1;
@@ -239,9 +277,6 @@ class TransactionPerQuarter implements FromArray, WithTitle, WithHeadings, WithE
 
             //months value
             $months = $transaction->getPaidMonthsByFiscalYear($fiscalYear, $member->id, [Transaction::STATUS_PAID]);
-
-            if ($member->login == '61357ac79efe3')
-                traceLog($months);
 
             //filter out close members
             if (!$member->is_activated && empty($months))
@@ -255,31 +290,47 @@ class TransactionPerQuarter implements FromArray, WithTitle, WithHeadings, WithE
                 $member->mobile
             ];
 
-            // fiscal year opening balance
-            $fromDate = date('Y-m-d', mktime(0, 0, 0, 6, 30, $from));
-            $toDate = date('Y-m-d', mktime(0, 0, 0, 6, 30, $from));
 
-            $headTotals = AccountHead::headsAmount($member->id, null, $firstMonth);
+            // excel upto month balance
+            $fyMy = explode('-', $quarterMonths[0]);
+            $prevMonth = date("m", strtotime($fyMy[0] . ' last month'));
+            $year = $fyMy[1];
+            $excelUpToMonth = date('Y-m-t', mktime(0, 0, 0, $prevMonth, 1, $year));
 
-            $row[] = $headTotals[AccountHead::getSavingHeadName()];
+            $userSavings = collect($allSavingsMonth)->filter(function ($item) use ($member) {
+                return $item['user']['id'] == $member->id;
+            })->filter(function ($item) {
+            })->toArray();
+
+            $headTotals = AccountHead::headsAmount($member->id, null, $excelUpToMonth);
+
+            $row[] = $initialBalance = $headTotals[AccountHead::getSavingHeadName()];
             $row[] = $headTotals[AccountHead::getShareHeadName()];
 
-
-
+            $i = 0;
             foreach ($quarterMonths as $my) {
 
                 list($month, $year) = explode('-', $my);
-                $row[] = in_array($month, $months) ? $monthSaving : 0;
+
+                if (in_array($month, $months)) {
+                    $row[] = $monthSaving;
+                    $i++;
+                } else {
+                    $row[] = 0;
+                }
+
                 $row[] = 0;
             }
 
             //fiscal year ending balance
-            $lastMonth = date('Y-m-d', mktime(0, 0, 0, 6, 30, $to));
-            $headTotals = AccountHead::headsAmount($member->id, null, $lastMonth);
+            $fyMy = explode('-', $quarterMonths[count($quarterMonths) - 1]);
+            $qLastMonth = date("m", strtotime($fyMy[0]));
+            $year = $fyMy[1];
 
-            $row[] = $headTotals[AccountHead::getSavingHeadName()];
+            $excelLastMonth = date('Y-m-t', mktime(0, 0, 0, $qLastMonth, 1, $year));
+            $headTotals = AccountHead::headsAmount($member->id, null, $excelLastMonth);
+            $row[] = $initialBalance + ($i * $monthSaving);
             $row[] = $headTotals[AccountHead::getShareHeadName()];
-
 
             $i++;
 

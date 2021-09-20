@@ -149,6 +149,7 @@ class AccountHead extends Model
 
     //functions
 
+
     public static function getSavingHeadName()
     {
         return 'monthly-deposit-savings';
