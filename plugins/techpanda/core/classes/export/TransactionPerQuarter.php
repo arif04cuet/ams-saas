@@ -23,6 +23,8 @@ use Techpanda\Core\Models\Association;
 use Techpanda\Core\Models\MonthlySaving;
 use Techpanda\Core\Models\Transaction;
 
+use function Matrix\trace;
+
 class TransactionPerQuarter implements FromArray, WithTitle, WithHeadings, WithEvents, ShouldAutoSize
 {
 
@@ -290,31 +292,26 @@ class TransactionPerQuarter implements FromArray, WithTitle, WithHeadings, WithE
                 $member->mobile
             ];
 
-            $userSavings = MonthlySaving::getTotalSavingsByUser($member,$allSavingsMonth,)
+
             // excel upto month balance
             $fyMy = explode('-', $quarterMonths[0]);
             $prevMonth = date("m", strtotime($fyMy[0] . ' last month'));
             $year = $fyMy[1];
             $excelUpToMonth = date('Y-m-t', mktime(0, 0, 0, $prevMonth, 1, $year));
 
-            $userSavings = collect($allSavingsMonth)->filter(function ($item) use ($member) {
-                return $item['user']['id'] == $member->id;
-            })->filter(function ($item) {
-            })->toArray();
+            $userSavings = MonthlySaving::getTotalSavingsByUser($member, $allSavingsMonth, $excelUpToMonth);
+            if ($member->id == 90)
+                traceLog($userSavings);
 
-            $headTotals = AccountHead::headsAmount($member->id, null, $excelUpToMonth);
+            $row[] = $userSavings['amount'];
+            $row[] = 0;
 
-            $row[] = $initialBalance = $headTotals[AccountHead::getSavingHeadName()];
-            $row[] = $headTotals[AccountHead::getShareHeadName()];
-
-            $i = 0;
             foreach ($quarterMonths as $my) {
 
                 list($month, $year) = explode('-', $my);
 
                 if (in_array($month, $months)) {
                     $row[] = $monthSaving;
-                    $i++;
                 } else {
                     $row[] = 0;
                 }
@@ -326,11 +323,12 @@ class TransactionPerQuarter implements FromArray, WithTitle, WithHeadings, WithE
             $fyMy = explode('-', $quarterMonths[count($quarterMonths) - 1]);
             $qLastMonth = date("m", strtotime($fyMy[0]));
             $year = $fyMy[1];
-
             $excelLastMonth = date('Y-m-t', mktime(0, 0, 0, $qLastMonth, 1, $year));
-            $headTotals = AccountHead::headsAmount($member->id, null, $excelLastMonth);
-            $row[] = $initialBalance + ($i * $monthSaving);
-            $row[] = $headTotals[AccountHead::getShareHeadName()];
+
+            $userSavings = MonthlySaving::getTotalSavingsByUser($member, $allSavingsMonth, $excelLastMonth);
+
+            $row[] = $userSavings['amount'];
+            $row[] = 0;
 
             $i++;
 

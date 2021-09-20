@@ -86,9 +86,8 @@ class Transactions extends Controller
         $fiscalYear = post('fiscal-year');
         $quarter = post('quarter');
 
-        MonthlySaving::getTotalSavings();
-        return 'done';
-        //return Backend::redirect('techpanda/core/transactions/downloadQReport?fiscalYear=' . $fiscalYear . '&quarter=' . $quarter);
+
+        return Backend::redirect('techpanda/core/transactions/downloadQReport?fiscalYear=' . $fiscalYear . '&quarter=' . $quarter);
     }
 
     public function index()

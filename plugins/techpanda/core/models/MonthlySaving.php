@@ -62,8 +62,8 @@ class MonthlySaving extends Model
         })->first();
 
         if (!is_null($toDate)) {
-            $list->filter(function ($item) use ($toDate) {
-                $mkTime = mktime(0, 0, 0, date("m", strtotime($item['month']), 1, $item['year']));
+            $list = collect($list)->filter(function ($item) use ($toDate) {
+                $mkTime = mktime(0, 0, 0, date("m", strtotime($item['month'])), 1, $item['year']);
                 $month = date("Y-m-t", $mkTime);
                 return strtotime($month) <= strtotime($toDate);
             });
@@ -75,11 +75,15 @@ class MonthlySaving extends Model
             $initialBalance = isset($initialBalanceData[0]['amount']) ? $initialBalanceData[0]['amount'] : 0;
         }
 
-        $total = $list->count() ? (($list->count() * Transaction::getPerMonthSaving()) + $initialBalance) : 0;
+        if ($user->id == 90)
+            traceLog($list->count());
+
+        $total = $initialBalance;
+        $total += $list->count() ? $list->count() * Transaction::getPerMonthSaving() : 0;
 
         return [
             'amount' => $total,
-            'items' => $list->toArray()
+            'items' => $list->keyBy('month')->toArray()
         ];
     }
 }
