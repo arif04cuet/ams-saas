@@ -42,7 +42,7 @@ class MonthlySaving extends Model
                 $q->select('id');
             },
             'transaction' => function ($q) {
-                $q->select('id', 'status');
+                $q->select('id', 'status', 'tnx_date');
             }
         ])->whereHas('transaction', function ($q) {
             $q->where('status', Transaction::STATUS_PAID);
@@ -67,7 +67,10 @@ class MonthlySaving extends Model
                 $month = date("Y-m-t", $mkTime);
                 return strtotime($month) <= strtotime($toDate);
             });
+        } else {
+            $list = collect($list);
         }
+
 
         //initial balance
         $initialBalance = 0;
@@ -75,15 +78,14 @@ class MonthlySaving extends Model
             $initialBalance = isset($initialBalanceData[0]['amount']) ? $initialBalanceData[0]['amount'] : 0;
         }
 
-        if ($user->id == 90)
-            traceLog($list->count());
-
         $total = $initialBalance;
         $total += $list->count() ? $list->count() * Transaction::getPerMonthSaving() : 0;
 
         return [
             'amount' => $total,
-            'items' => $list->keyBy('month')->toArray()
+            'items' => $list->keyBy(function ($item) {
+                return $item['month'] . '-' . $item['year'];
+            })->toArray()
         ];
     }
 }

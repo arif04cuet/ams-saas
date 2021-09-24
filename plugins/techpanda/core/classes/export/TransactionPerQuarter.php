@@ -35,7 +35,7 @@ class TransactionPerQuarter implements FromArray, WithTitle, WithHeadings, WithE
     private $tenant;
     private $fiscalMonths;
     public const userCells = 5;
-    public const balanceCells = 2;
+    public const balanceCells = 1;
     public const cellsforEachMonth = 2;
 
     public function __construct($tenant, $fiscalYear, $quarter)
@@ -68,7 +68,7 @@ class TransactionPerQuarter implements FromArray, WithTitle, WithHeadings, WithE
 
         $monthCols = [];
 
-        $startBalance = 'Balance Up to ' . date("F-Y", strtotime("-1 months", strtotime('1-' . $months[0])));
+        $startBalance = 'Savings Up to ' . date("F-Y", strtotime("-1 months", strtotime('1-' . $months[0])));
         for ($i = 1; $i <= self::balanceCells; $i++) {
             $monthCols[] = $i == 1 ? $startBalance : ' ';
         }
@@ -81,7 +81,7 @@ class TransactionPerQuarter implements FromArray, WithTitle, WithHeadings, WithE
             }
         }
 
-        $endBalance = 'Balance Up to ' . date("F-Y", strtotime('1-' . $months[count($months) - 1]));
+        $endBalance = 'Savings Up to ' . date("F-Y", strtotime('1-' . $months[count($months) - 1]));
         for ($i = 1; $i <= self::balanceCells; $i++) {
             $monthCols[] = $i == 1 ? $endBalance : ' ';
         }
@@ -103,8 +103,12 @@ class TransactionPerQuarter implements FromArray, WithTitle, WithHeadings, WithE
         $firstRow = ['Sl No.', 'Member No.', 'Name', 'Designstion', 'Mobile'];
 
         for ($i = 0; $i <= count($quarterMonths); $i++) {
-            $firstRow[] = 'Savings';
-            $firstRow[] = 'Share';
+            if ($i == 0) {
+                $firstRow[] = '';
+            } else {
+                $firstRow[] = 'Savings';
+                $firstRow[] = 'Tnx Date';
+            }
         }
 
         $data = $this->dataByFiscalYear($this->fiscalYear);
@@ -223,6 +227,8 @@ class TransactionPerQuarter implements FromArray, WithTitle, WithHeadings, WithE
         // //set style
         $cellRange = 'A1:CF1'; // All headers
         $event->sheet->getDelegate()->getStyle($cellRange)->applyFromArray($styleArray);
+        $cellRange = 'A2:CF2'; // All headers
+        $event->sheet->getDelegate()->getStyle($cellRange)->applyFromArray($styleArray);
     }
 
     public function getHeadTotals($member)
@@ -296,27 +302,34 @@ class TransactionPerQuarter implements FromArray, WithTitle, WithHeadings, WithE
             // excel upto month balance
             $fyMy = explode('-', $quarterMonths[0]);
             $prevMonth = date("m", strtotime($fyMy[0] . ' last month'));
-            $year = $fyMy[1];
+            $year = $this->quarter == 3 ? $from : $fyMy[1];
+
             $excelUpToMonth = date('Y-m-t', mktime(0, 0, 0, $prevMonth, 1, $year));
 
             $userSavings = MonthlySaving::getTotalSavingsByUser($member, $allSavingsMonth, $excelUpToMonth);
-            if ($member->id == 90)
-                traceLog($userSavings);
+            $userSavingList = MonthlySaving::getTotalSavingsByUser($member, $allSavingsMonth);
+            if ($member->login == '001H842') {
+                traceLog($quarterMonths);
+            }
 
             $row[] = $userSavings['amount'];
-            $row[] = 0;
 
             foreach ($quarterMonths as $my) {
 
                 list($month, $year) = explode('-', $my);
 
+                $monthly = [
+                    'savings' => 0,
+                    'share' => 0
+                ];
+
                 if (in_array($month, $months)) {
-                    $row[] = $monthSaving;
-                } else {
-                    $row[] = 0;
+                    $monthly['savings'] = $monthSaving;
+                    $monthly['share'] = date("d-m-Y", strtotime($userSavingList['items'][$my]['transaction']['tnx_date']));
                 }
 
-                $row[] = 0;
+                $row[] = $monthly['savings'];
+                $row[] = $monthly['share'];
             }
 
             //fiscal year ending balance
@@ -327,8 +340,12 @@ class TransactionPerQuarter implements FromArray, WithTitle, WithHeadings, WithE
 
             $userSavings = MonthlySaving::getTotalSavingsByUser($member, $allSavingsMonth, $excelLastMonth);
 
+            if ($member->login == '001H842') {
+                traceLog($allSavingsMonth);
+                traceLog($userSavings);
+            }
+
             $row[] = $userSavings['amount'];
-            $row[] = 0;
 
             $i++;
 
