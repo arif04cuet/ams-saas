@@ -287,7 +287,12 @@ class TransactionPerQuarter implements FromArray, WithTitle, WithHeadings, WithE
             $months = $transaction->getPaidMonthsByFiscalYear($fiscalYear, $member->id, [Transaction::STATUS_PAID]);
 
             //filter out close members
-            if (!$member->is_activated && empty($months))
+            $dipositedMonths = collect($quarterMonths)->filter(function ($item) use ($months) {
+                $parts = explode('-', $item);
+                return in_array($parts[0], $months);
+            })->toArray();
+
+            if (!$member->is_activated && empty($dipositedMonths))
                 continue;
 
             $row = [
@@ -308,9 +313,7 @@ class TransactionPerQuarter implements FromArray, WithTitle, WithHeadings, WithE
 
             $userSavings = MonthlySaving::getTotalSavingsByUser($member, $allSavingsMonth, $excelUpToMonth);
             $userSavingList = MonthlySaving::getTotalSavingsByUser($member, $allSavingsMonth);
-            if ($member->login == '001H842') {
-                traceLog($quarterMonths);
-            }
+
 
             $row[] = $userSavings['amount'];
 
@@ -339,11 +342,6 @@ class TransactionPerQuarter implements FromArray, WithTitle, WithHeadings, WithE
             $excelLastMonth = date('Y-m-t', mktime(0, 0, 0, $qLastMonth, 1, $year));
 
             $userSavings = MonthlySaving::getTotalSavingsByUser($member, $allSavingsMonth, $excelLastMonth);
-
-            if ($member->login == '001H842') {
-                traceLog($allSavingsMonth);
-                traceLog($userSavings);
-            }
 
             $row[] = $userSavings['amount'];
 

@@ -8,6 +8,7 @@ use BackendAuth;
 use BackendMenu;
 use Flash;
 use Illuminate\Support\Facades\DB;
+use NumberFormatter;
 use Queue;
 use Techpanda\Core\Classes\Export\QTransactionExport;
 use Techpanda\Core\Classes\Export\TransactionExport;
@@ -78,7 +79,9 @@ class Transactions extends Controller
         $quarter = request('quarter');
 
         $export = new QTransactionExport(Helper::getAssociationId(), $fiscalYear, $quarter);
-        $filename = 'quarterly_report_' . $quarter . '_' . $fiscalYear;
+
+        $formatedQuarter = (new NumberFormatter('en_US', NumberFormatter::ORDINAL))->format($quarter);
+        $filename = $formatedQuarter . '_quarter_report_' . $fiscalYear;
         return Excel::export($export, $filename, 'xlsx');
     }
     public function onSubmitQReportRequest()
