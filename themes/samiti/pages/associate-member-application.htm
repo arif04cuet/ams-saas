@@ -49,7 +49,7 @@ $userData['password_confirmation'] = UserProfile::DEFAULT_PASSWORD;
 traceLog($userData);
 //save user
 $user = User::create($userData);
-$user->role = Backend\Models\UserRole::where('code','member')->first();
+$user->role = Backend\Models\UserRole::where('code','associate-member')->first();
 
 if (Input::hasFile('avatar'))
 $user->avatar = Input::file('avatar');
@@ -63,11 +63,14 @@ $profileData['user_id'] = $user->id;
 $profile = UserProfile::create($profileData);
 
 // fire event
-Event::fire('online.application.submitted', [$user]);
+Event::fire('associate.application.submitted', [$user]);
 
 });
 
 Flash::success(Lang::get('techpanda.core::lang.frontend.online_form_success_message'));
+return [
+'#avatarPreview'=>''
+];
 }
 ==
 <h3>Online application</h3>

@@ -68,6 +68,11 @@ Event::fire('online.application.submitted', [$user]);
 });
 
 Flash::success(Lang::get('techpanda.core::lang.frontend.online_form_success_message'));
+
+return [
+'#avatarPreview'=>''
+];
+
 }
 ==
 <h3>Online application</h3>
