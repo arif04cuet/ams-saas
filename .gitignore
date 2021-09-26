@@ -62,6 +62,7 @@ node_modules/
 
 # Themes
 !themes/samiti/
+!deliveries.md
 
 # Plugins
 # If all of your plugins are private and you didn't uncomment line 31,
