@@ -153,7 +153,7 @@ class Transaction extends Model
     }
     public function getFiscalYearOptions()
     {
-        $years = HeadFee::distinct()->pluck('year', 'year')->all();
+        $years = HeadFee::distinct()->orderBy('year', 'desc')->pluck('year', 'year')->all();
         return $years;
     }
     public function getQuantityValue($headFee)

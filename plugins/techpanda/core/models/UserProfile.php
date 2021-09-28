@@ -11,7 +11,7 @@ class UserProfile extends Model
 {
     use \October\Rain\Database\Traits\Validation;
 
-    const DEFAULT_PASSWORD = '12345678';
+    public const DEFAULT_PASSWORD = '12345678';
     /**
      * @var string The database table used by the model.
      */

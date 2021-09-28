@@ -16,11 +16,15 @@ class BackendUserTabController extends ControllerBehavior
 
     public function onApproved($recordId)
     {
+
+        $user = request('User');
+
         $member = User::where('id', $recordId)->where('is_activated', 0)->first();
 
         if (!$member)
             return;
 
+        $member->login = $user['login'];
         $member->is_activated = true;
         $member->activated_at = now();
         $member->save();

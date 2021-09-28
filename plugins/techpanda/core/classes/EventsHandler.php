@@ -193,7 +193,7 @@ class EventsHandler
         // filters members/online applications/associates member data in members menu
         if (get_class($listWidget->getController()) === 'Backend\Controllers\Users') {
 
-            // online applications
+            // active members
             if ($listWidget->alias === 'members') {
 
                 $query->where('is_activated', 1);
@@ -229,9 +229,9 @@ class EventsHandler
 
         //inject total count to members list
         if (get_class($controller) === 'Backend\Controllers\Users' && $action === 'index') {
-            $controller->vars['member_total'] = User::where('is_activated', 1)->whereIn('role_id', [1, 2])->get()->count();
-            $controller->vars['application_total'] = User::where('is_activated', 0)->where('role_id', 1)->get()->count();
-            $controller->vars['associate_total'] = User::where('role_id', 3)->get()->count();
+            $controller->vars['member_total'] = User::where('association_id', Helper::getAssociationId())->where('is_activated', 1)->whereIn('role_id', [1, 2])->get()->count();
+            $controller->vars['application_total'] = User::where('association_id', Helper::getAssociationId())->where('is_activated', 0)->where('role_id', 1)->get()->count();
+            $controller->vars['associate_total'] = User::where('association_id', Helper::getAssociationId())->where('role_id', 3)->get()->count();
         }
 
         //redirect to users page if super admin not belonging to any association
