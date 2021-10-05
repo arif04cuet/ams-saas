@@ -95,12 +95,18 @@ class BackendUserExtension
             // });
         });
 
+
         BackendUsersController::extend(function ($controller) {
 
 
             // add custom behaviors
             if (!$controller->isClassExtendedWith('Techpanda.Core.Behaviors.BackendUserTabController')) {
                 $controller->implement[] = 'Techpanda.Core.Behaviors.BackendUserTabController';
+            }
+
+            // add roll management behaviors
+            if (!$controller->isClassExtendedWith('Techpanda.Core.Behaviors.BackendUserRollController')) {
+                $controller->implement[] = 'Techpanda.Core.Behaviors.BackendUserRollController';
             }
 
             //add customview path
@@ -115,15 +121,15 @@ class BackendUserExtension
                 'members' => '$/techpanda/core/controllers/members/config_list.yaml',
                 'applications' => '$/techpanda/core/controllers/members/applications/config_list.yaml',
                 'associates' => '$/techpanda/core/controllers/members/associates/config_list.yaml',
+                'disabled_members' => '$/techpanda/core/controllers/members/disabled/config_list.yaml',
+                'member_rolls' => '$/techpanda/core/controllers/members/rolls/config_list.yaml',
             ];
 
             //association wise form view
-            $formConfigPath = '$/techpanda/core/controllers/members/config_form.yaml';
-            $controller->formConfig = $controller->mergeConfig(
-                $controller->formConfig,
-                $formConfigPath
-            );
+            $formConfigPath = post('mode') == 'rolls' ? '$/techpanda/core/controllers/members/rolls/config_form.yaml' : '$/techpanda/core/controllers/members/config_form.yaml';
+            $controller->formConfig = $formConfigPath;
         });
+
 
         BackendUsersController::extendFormFields(function ($form, $model, $context) {
 

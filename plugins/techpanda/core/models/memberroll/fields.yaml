@@ -1,0 +1,11 @@
+fields:
+    name:
+        label: 'Full Name'
+        span: auto
+        required: 1
+        type: text
+    roll:
+        label: Roll
+        span: auto
+        required: 1
+        type: text

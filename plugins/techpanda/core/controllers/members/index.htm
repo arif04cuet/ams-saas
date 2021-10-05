@@ -12,6 +12,15 @@
                 Associate Members (
                 <?= $associate_total ?> )
             </a></li>
+
+             <li><a href="#disabled_members">
+                Disabled Members (
+                <?= $disabled_members ?> )
+            </a></li>
+
+              <li>
+                <a href="#disabled_members">Member Rolls</a>
+              </li>
     </ul>
     <div class="tab-content">
         <div class="tab-pane active">
@@ -23,6 +32,14 @@
 
         <div class="tab-pane">
             <?= $this->listRender('associates') ?>
+        </div>
+
+         <div class="tab-pane">
+            <?= $this->listRender('disabled_members') ?>
+        </div>
+
+         <div class="tab-pane">
+            <?= $this->listRender('member_rolls') ?>
         </div>
 
     </div>

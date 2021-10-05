@@ -186,3 +186,6 @@
 1.0.63:
     - 'Updated table techpanda_core_bank_statements'
     - builder_table_update_techpanda_core_account_heads3.php
+1.0.64:
+    - 'Created table techpanda_core_member_rolls'
+    - builder_table_create_techpanda_core_member_rolls.php

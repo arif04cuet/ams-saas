@@ -1,0 +1,15 @@
+list: $/techpanda/core/models/memberroll/columns.yaml
+modelClass: Techpanda\Core\Models\MemberRoll
+title: Member Rolls
+noRecordsMessage: 'backend::lang.list.no_records'
+showSetup: false
+showCheckboxes: false
+recordOnClick: "$.popup({ handler: 'onUpdateForm', extraData: { mode: 'member_rolls', record_id: ':id' } })"
+recordsPerPage: 20
+defaultSort:
+    column: id
+    direction: desc
+toolbar:
+    buttons: $/techpanda/core/controllers/members/rolls/_list_toolbar.htm
+    search:
+        prompt: 'backend::lang.list.search_prompt'

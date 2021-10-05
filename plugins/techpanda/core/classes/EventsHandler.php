@@ -215,6 +215,13 @@ class EventsHandler
 
                 $query->where('role_id', 3)->orderBy('is_activated', 'asc');
             }
+
+            //associate members
+
+            if ($listWidget->alias === 'disabled_members') {
+
+                $query->onlyTrashed()->orderBy('deleted_at', 'desc');
+            }
         }
     }
     public function isAdminUser($controller, $action)
@@ -232,6 +239,7 @@ class EventsHandler
             $controller->vars['member_total'] = User::where('association_id', Helper::getAssociationId())->where('is_activated', 1)->whereIn('role_id', [1, 2])->get()->count();
             $controller->vars['application_total'] = User::where('association_id', Helper::getAssociationId())->where('is_activated', 0)->where('role_id', 1)->get()->count();
             $controller->vars['associate_total'] = User::where('association_id', Helper::getAssociationId())->where('role_id', 3)->get()->count();
+            $controller->vars['disabled_members'] = User::where('association_id', Helper::getAssociationId())->where('is_activated', 0)->onlyTrashed()->get()->count();
         }
 
         //redirect to users page if super admin not belonging to any association

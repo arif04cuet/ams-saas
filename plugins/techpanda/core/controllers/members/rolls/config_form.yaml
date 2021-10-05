@@ -1,0 +1,10 @@
+name: Roll
+form: $/techpanda/core/models/memberroll/fields.yaml
+modelClass: Techpanda\Core\Models\MemberRoll
+defaultRedirect: techpanda/core/accountheads
+create:
+    redirect: 'techpanda/core/accountheads/update/:id'
+    redirectClose: techpanda/core/accountheads
+update:
+    redirect: techpanda/core/accountheads
+    redirectClose: techpanda/core/accountheads

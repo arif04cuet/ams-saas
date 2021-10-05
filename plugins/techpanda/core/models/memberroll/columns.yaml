@@ -1,0 +1,8 @@
+columns:
+    name:
+        label: 'Full Name'
+        type: text
+    roll:
+        label: Roll
+        type: text
+        sortable: false
