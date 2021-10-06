@@ -126,7 +126,7 @@ class BackendUserExtension
             ];
 
             //association wise form view
-            $formConfigPath = post('mode') == 'rolls' ? '$/techpanda/core/controllers/members/rolls/config_form.yaml' : '$/techpanda/core/controllers/members/config_form.yaml';
+            $formConfigPath = post('mode') == 'member_rolls' ? '$/techpanda/core/controllers/members/rolls/config_form.yaml' : '$/techpanda/core/controllers/members/config_form.yaml';
             $controller->formConfig = $formConfigPath;
         });
 

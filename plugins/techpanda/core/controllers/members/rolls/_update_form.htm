@@ -1,3 +1,4 @@
+<div id="roll_form">
 <?= Form::open(['id' => 'updateForm']) ?>
 
 <input type="hidden" name="record_id" value="<?= $recordId ?>" />
@@ -24,7 +25,7 @@
         <?= e(trans('backend::lang.form.cancel')) ?>
     </button>
 
-    <button type="button" class="oc-icon-trash-o btn-icon danger pull-left" data-request="onDelete"
+    <button type="button" class="oc-icon-trash-o btn-icon danger pull-left" data-request="onDeleteRoll"
         data-popup-load-indicator data-request-confirm="Do you really want to delete this comment?">
     </button>
 </div>
@@ -50,3 +51,7 @@
 </script>
 
 <?= Form::close() ?>
+</div>
+<style>
+#roll_form .modal-body .layout-row #Form-primaryTabs {display:none}
+</style>

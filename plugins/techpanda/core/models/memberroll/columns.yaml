@@ -2,7 +2,9 @@ columns:
     name:
         label: 'Full Name'
         type: text
+        searchable: true
     roll:
         label: Roll
         type: text
+        searchable: true
         sortable: false

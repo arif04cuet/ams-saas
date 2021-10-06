@@ -26,12 +26,26 @@ class BackendUserRollController extends ControllerBehavior
 
     public function onCreate()
     {
-        $data = request('MemberRoll');
-        unset($data['permissions']);
-
-        request()->request->add(['MemberRoll' => $data]);
-        traceLog(request()->all());
         $this->controller->asExtension('FormController')->create_onSave();
-        return $this->controller->listRefresh($this->vars['mode']);
+        return $this->controller->listRefresh($this->controller->vars['mode']);
+    }
+
+    public function onUpdateForm()
+    {
+        $this->controller->asExtension('FormController')->update(post('record_id'));
+        $this->controller->vars['recordId'] = post('record_id');
+        return $this->controller->makePartial('rolls/update_form');
+    }
+
+    public function onUpdate()
+    {
+        $this->controller->asExtension('FormController')->update_onSave(post('record_id'));
+        return $this->controller->listRefresh($this->controller->vars['mode']);
+    }
+
+    public function onDeleteRoll()
+    {
+        $this->controller->asExtension('FormController')->update_onDelete(post('record_id'));
+        return $this->controller->listRefresh($this->controller->vars['mode']);
     }
 }
