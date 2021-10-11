@@ -71,9 +71,9 @@ class Plugin extends PluginBase
         Event::subscribe(new FrontendEvents());
 
         // Check if we are currently in backend module.
-        if (!App::runningInBackend()) {
-            return;
-        }
+        // if (!App::runningInBackend()) {
+        //     return;
+        // }
         $this->extendClasses();
         Event::subscribe(new EventsHandler());
 

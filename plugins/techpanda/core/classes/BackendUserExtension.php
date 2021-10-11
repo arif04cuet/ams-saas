@@ -38,6 +38,8 @@ class BackendUserExtension
 
 
             //relations
+
+            $model->attachOne['signature'] = ['System\Models\File'];
             $model->hasOne['profile'] = ['Techpanda\Core\Models\UserProfile'];
 
             $model->belongsTo['association'] = ['Techpanda\Core\Models\Association'];
