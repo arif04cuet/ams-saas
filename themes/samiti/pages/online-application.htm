@@ -9,6 +9,7 @@ use Techpanda\Core\Models\UserProfile;
 use Techpanda\Core\Models\MemberRoll;
 use Backend\Models\User;
 use System\Models\File as File;
+use System\Classes\MailManager;
 
 function onStart(){
     $this['rollList'] = MemberRoll::all();
@@ -66,10 +67,26 @@ function onPhotoUpload(){
     $this['url'] = $file->getThumb(200, 200, ['mode' => 'crop']);
 }
 
-function onSubmitApplication(){
+function onPreview(){
+    $data = request()->all();
+    //$this->validateData($data);
 
-    $data = post();
-traceLog($data);
+    if(Input::hasFile('avatar')){
+        $data['avatar_url'] = (new File())->fromPost($data['avatar'])->getThumb(200, 200, ['mode' => 'crop']);
+        unset($data['avatar']);
+    }
+    if(Input::hasFile('signature')){
+        $data['signature_url'] = (new File())->fromPost($data['signature'])->getThumb(200, 200, ['mode' => 'crop']);
+        unset($data['signature']);
+    }
+
+
+    return [
+       '#modalBodyContent'=> MailManager::instance()->renderPartial('new-application-preview',$data)
+    ];
+}
+function ValidateData($data){
+
     $rules=
     [
         'user.first_name'=>'required',
@@ -102,6 +119,12 @@ traceLog($data);
     if($validator->fails())
         throw new ValidationException($validator);
 
+    return true;
+}
+function onSubmitApplication(){
+
+    $data = post();
+    $this->validateData($data);
 
     DB::transaction(function() use($data){
 
@@ -135,6 +158,8 @@ traceLog($data);
     });
 
     Flash::success(Lang::get('techpanda.core::lang.frontend.online_form_success_message'));
+
+    // render pdf copy of previewed data
 
     return [
     '#avatarPreview'=>''
@@ -171,7 +196,15 @@ traceLog($data);
 
         </div>
     </form>
+
+
 </div>
 
 <div id="new_application_form">
+
+</div>
+
+{# Preview section #}
+<div class="preview">
+    {% partial 'newApplication/preview'%}
 </div>

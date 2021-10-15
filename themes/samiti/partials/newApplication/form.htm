@@ -1,4 +1,4 @@
-<form data-request="onSubmitApplication" data-request-files data-request-validate data-request-flash data-request-success="formSuccess(this, context, data, textStatus, jqXHR)">
+<form id="newApplicationForm" data-request="onSubmitApplication" data-request-files data-request-validate data-request-flash data-request-success="formSuccess(this, context, data, textStatus, jqXHR)">
 	{{ form_sessionKey()}}
 	{{ form_token()}}
 
@@ -233,9 +233,8 @@
 
 	</div>
 
-	<button type="button" class="btn btn-primary" data-attach-loading>See Preview</button>
+	<button data-toggle="modal" href="#contentBasic" type="sumit" data-request-files data-request="onPreview" class="btn btn-primary" data-attach-loading>Preview</button>
 
-	<button type="submit" class="btn btn-success" data-attach-loading>Submit</button>
 
 </form>
 

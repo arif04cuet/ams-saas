@@ -140,6 +140,17 @@ tabs:
             label: NID
             span: right
             tab: techpanda.core::lang.member.personal_info
+        profile[official_mobile]:
+            context: [myaccount,update]
+            label: Official Mobile
+            span: left
+            tab: techpanda.core::lang.member.personal_info
+        profile[roll]:
+            context: [myaccount,update]
+            label: Roll
+            span: right
+            tab: techpanda.core::lang.member.personal_info
+
         profile[marital_status]:
             context: [myaccount,update]
             label: Marital Status
@@ -187,6 +198,12 @@ tabs:
         profile[nominee_relation]:
             context: [myaccount,update]
             label: Relationship with Nominee
+            tab: techpanda.core::lang.member.family_info
+            span: auto
+
+        profile[nominee_mobile]:
+            context: [myaccount,update]
+            label: Nominee's Mobile
             tab: techpanda.core::lang.member.family_info
             span: auto
 
@@ -266,3 +283,8 @@ secondaryTabs:
             mode: image
             imageHeight: 250
             imageWidth: 250
+        signature:
+            label: Signature
+            type: fileupload
+            mode: image
+            imageWidth: 100

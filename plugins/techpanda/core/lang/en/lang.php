@@ -5,7 +5,7 @@
     ],
     'member' => [
         'email' => 'Email',
-        'mobile' => 'Mobile',
+        'mobile' => 'Personal Mobile',
         'cadre' => 'Cadre',
         'association' => 'Association',
         'fullname_en' => 'Full Name (en)',

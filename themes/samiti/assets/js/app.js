@@ -18,3 +18,9 @@ $(document).on('ajaxSuccess', function (event, context) {
         $("div[data-validate-for='signature']").empty();
     }
 })
+
+//submit new application when button click
+
+$('#newAppPreviewSubmitBtn').click(function () {
+    $("#newApplicationForm").submit();
+});
