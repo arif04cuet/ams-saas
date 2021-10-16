@@ -10,6 +10,7 @@ use Techpanda\Core\Models\MemberRoll;
 use Backend\Models\User;
 use System\Models\File as File;
 use System\Classes\MailManager;
+use Renatio\DynamicPDF\Classes\PDF;
 
 function onStart(){
     $this['rollList'] = MemberRoll::all();
@@ -160,11 +161,11 @@ function onSubmitApplication(){
     Flash::success(Lang::get('techpanda.core::lang.frontend.online_form_success_message'));
 
     // render pdf copy of previewed data
+    $fileName = rand().'.pdf';
+    $filePath = storage_path('temp/public/').$fileName;
+    PDF::loadTemplate('new-application-form',$data)->save($filePath);
 
-    return [
-    '#avatarPreview'=>''
-    ];
-
+    return redirect('/storage/temp/public/'. $fileName);
 }
 
 ?>
