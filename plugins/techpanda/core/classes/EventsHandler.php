@@ -213,7 +213,9 @@ class EventsHandler
 
             if ($listWidget->alias === 'associates') {
 
-                $query->where('role_id', 3)->orderBy('is_activated', 'asc');
+                $query->where('role_id', 3)
+                    ->orderBy('is_activated', 'asc')
+                    ->orderBy('created_at', 'desc');
             }
 
             //disabled members

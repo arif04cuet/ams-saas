@@ -1,5 +1,5 @@
-title = "New Member Application"
-url = "/online-application"
+title = "Associate Member Application"
+url = "/associate-member-form"
 layout = "default"
 is_hidden = 0
 ==
@@ -24,31 +24,14 @@ function onSubmitRoll(){
                                 ->values()
                                 ->all();
     return [
-        '#new_application_form'=> $this->renderPartial('newApplication/form')
+        '#new_application_form'=> $this->renderPartial('associateApplication/form')
     ];
-}
-
-function onSignatureUpload(){
-    $image = Input::all();
-    $rules = [
-        'signature'=>'image|dimensions:max_width=100,max_height=100'
-    ];
-
-    $validator = Validator::make(
-        $image,
-        $rules
-    );
-
-    if($validator->fails()){
-        throw new ValidationException($validator);
-    }
-
-    $file = (new File())->fromPost($image['signature']);
-    $this['url'] = $file->getThumb(100, null, ['mode' => 'crop']);
 }
 
 function onPhotoUpload(){
     $image = Input::all();
+
+
     traceLog($image);
     $rules = [
         'avatar'=>'image|dimensions:max_width=250,max_height=250'
@@ -80,9 +63,8 @@ function onPreview(){
         unset($data['signature']);
     }
 
-
     return [
-       '#modalBodyContent'=> MailManager::instance()->renderPartial('new-application-preview',$data)
+       '#modalBodyContent'=> MailManager::instance()->renderPartial('associate-application-preview',$data)
     ];
 }
 function ValidateData($data){
@@ -137,13 +119,10 @@ function onSubmitApplication(){
 
     //save user
     $user = User::create($userData);
-    $user->role = Backend\Models\UserRole::where('code','member')->first();
+    $user->role = Backend\Models\UserRole::where('code','associate-member')->first();
 
     if (Input::hasFile('avatar'))
         $user->avatar = Input::file('avatar');
-    if (Input::hasFile('signature'))
-        $user->signature = Input::file('signature');
-
 
     $user->save();
 
@@ -153,7 +132,7 @@ function onSubmitApplication(){
     $profile = UserProfile::create($profileData);
 
     // fire event
-    Event::fire('online.application.submitted', [$user]);
+    Event::fire('associate.application.submitted', [$user]);
 
     });
 
@@ -162,7 +141,7 @@ function onSubmitApplication(){
     // render pdf copy of previewed data
     $fileName = rand().'.pdf';
     $filePath = storage_path('temp/public/').$fileName;
-    PDF::loadTemplate('new-application-form',$data)->save($filePath);
+    PDF::loadTemplate('associate-application-form',$data)->save($filePath);
 
     return redirect('/storage/temp/public/'. $fileName);
 }
@@ -171,7 +150,7 @@ function onSubmitApplication(){
 <h3>Online application</h3>
 <hr>
 <div>
-    {% content 'new_member_application_help'%}
+    {% content 'associate_member_application_help'%}
 
 </div>
 

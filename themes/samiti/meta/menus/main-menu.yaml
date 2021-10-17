@@ -29,7 +29,7 @@ items:
         title: 'Associate Member Application'
         type: cms-page
         code: ''
-        reference: associate-member-application
+        reference: associate-member-form
         viewBag:
             isHidden: '0'
             cssClass: ''
