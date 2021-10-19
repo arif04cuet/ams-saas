@@ -206,6 +206,11 @@ tabs:
             label: Nominee's Mobile
             tab: techpanda.core::lang.member.family_info
             span: auto
+        profile[father_name]:
+            context: [myaccount,update]
+            label: Father Name
+            tab: techpanda.core::lang.member.family_info
+            span: auto
 
         user_present_address:
             context: [myaccount,update]
@@ -288,3 +293,11 @@ secondaryTabs:
             type: fileupload
             mode: image
             imageWidth: 100
+        profile[user_nid_copy]:
+            label: Member's NID
+            type: fileupload
+            mode: image
+        profile[nominee_nid_copy]:
+            label: Nominee's NID
+            type: fileupload
+            mode: image

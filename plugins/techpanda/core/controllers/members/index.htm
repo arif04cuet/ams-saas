@@ -1,51 +1,63 @@
 <div class="control-tabs content-tabs tabs-flush members" data-control="tab">
-    <ul class="nav nav-tabs">
-        <li class="active"><a href="#members">
-                Members (
-                <?= $member_total ?> )
-            </a></li>
-        <li><a href="#applications">
-                Online Applications (
-                <?= $application_total ?> )
-            </a></li>
-        <li><a href="#associate">
-                Associate Members (
-                <?= $associate_total ?> )
-            </a></li>
+	<ul class="nav nav-tabs">
+		<li class="active">
+			<a href="#members">
+				Members (
+				<?= $member_total ?>
+				)
+			</a>
+		</li>
+		<li>
+			<a href="#applications">
+				New Applications (
+				<?= $application_total ?>
+				)
+			</a>
+		</li>
+		<li>
+			<a href="#associate">
+				Associate Members (
+				<?= $associate_total ?>
+				)
+			</a>
+		</li>
 
-             <li><a href="#disabled_members">
-                Disabled Members (
-                <?= $disabled_members ?> )
-            </a></li>
+		<li>
+			<a href="#disabled_members">
+				Disabled Members (
+				<?= $disabled_members ?>
+				)
+			</a>
+		</li>
 
-              <li>
-                <a href="#members">Member Rolls</a>
-              </li>
-    </ul>
-    <div class="tab-content">
-        <div class="tab-pane active">
-            <?= $this->listRender('members') ?>
-        </div>
-        <div class="tab-pane">
-            <?= $this->listRender('applications') ?>
-        </div>
+		<li>
+			<a href="#members">Member Rolls</a>
+		</li>
+	</ul>
+	<div class="tab-content">
+		<div class="tab-pane active">
+			<?= $this->listRender('members') ?>
+		</div>
+		<div class="tab-pane">
+			<?= $this->listRender('applications') ?>
+		</div>
 
-        <div class="tab-pane">
-            <?= $this->listRender('associates') ?>
-        </div>
+		<div class="tab-pane">
+			<?= $this->listRender('associates') ?>
+		</div>
 
-         <div class="tab-pane">
-            <?= $this->listRender('disabled_members') ?>
-        </div>
+		<div class="tab-pane">
+			<?= $this->listRender('disabled_members') ?>
+		</div>
 
-         <div class="tab-pane">
-            <?= $this->listRender('member_rolls') ?>
-        </div>
+		<div class="tab-pane">
+			<?= $this->listRender('member_rolls') ?>
+		</div>
 
-    </div>
+	</div>
 </div>
 <style>
-    .members span.title>span {
-        max-width: 100% !important;
-    }
+	.members span.title > span {
+		max-width: 100% !important;
+	}
 </style>

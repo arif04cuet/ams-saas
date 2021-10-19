@@ -14,22 +14,22 @@ items:
             isExternal: '0'
     -
         title: 'Online Application'
-        nesting: null
         type: cms-page
-        url: null
         code: ''
         reference: online-application
-        cmsPage: null
-        replace: null
         viewBag:
             isHidden: '0'
             cssClass: ''
             isExternal: '0'
     -
         title: 'Associate Member Application'
+        nesting: null
         type: cms-page
+        url: null
         code: ''
         reference: associate-member-form
+        cmsPage: null
+        replace: null
         viewBag:
             isHidden: '0'
             cssClass: ''

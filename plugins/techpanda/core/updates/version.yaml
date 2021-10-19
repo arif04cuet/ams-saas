@@ -198,3 +198,6 @@
 1.0.67:
     - 'Updated table techpanda_core_member_rolls'
     - builder_table_update_techpanda_core_member_rolls_2.php
+1.0.68:
+    - 'Updated table techpanda_core_user_profiles'
+    - builder_table_update_techpanda_core_user_profiles.php

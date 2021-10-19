@@ -7,36 +7,41 @@
 			<label for="name_en">Name (In English)
 				<span class="text-danger">*</span>
 			</label>
-			<input value="{{member.name}}" type="text" name="user[first_name]" class="form-control" id="name_en">
+			<input type="text" name="user[first_name]" class="form-control" id="name_en">
 			<div class="text-danger" data-validate-for="user.first_name"></div>
 		</div>
 		<div class="form-group col">
 			<label for="name_bn">Name (In Bangla)
 				<span class="text-danger">*</span>
 			</label>
-			<input type="text" name="user[fullname_bn]" class="form-control" id="name_bn">
+			<input value="{{member.name}}" type="text" name="user[fullname_bn]" class="form-control" id="name_bn">
 			<div class="text-danger" data-validate-for="user.fullname_bn"></div>
 		</div>
 
-
-		<div class="form-group col ">
-			<label for="avatar">Profile Image
+		<div class="form-group col">
+			<label for="father_name">Father Name
+				<span class="text-danger">*</span>
 			</label>
-			<input data-request-ajax-global="true" data-request-files data-request="onPhotoUpload" data-request-update="imagePreview:'#avatarPreview'" accept="image/*" type="file" name="avatar" class="form-control" id="avatar"/>
-
-			<small class="form-text text-muted">250x250 image.</small>
-
-			<div class="text-danger" data-validate-for="avatar"></div>
-			<div id="avatarPreview"></div>
+			<input type="text" name="profile[father_name]" class="form-control" id="father_name">
+			<div class="text-danger" data-validate-for="profile.father_name"></div>
 		</div>
-		<div class="form-group col ">
-			<label for="avatar">Upload Signature
+
+		<div class="form-group col-md-4">
+			<label for="ReferenceSelection">Reference Member
+				<span class="text-danger">*</span>
 			</label>
-			<input data-request-files data-request-update="imagePreview:'#signaturePreview'" data-request="onSignatureUpload" accept="image/*" type="file" name="signature" class="form-control" id="signature">
-			<small class="form-text text-muted">max 100x100 image.</small>
-			<div class="text-danger" data-validate-for="signature"></div>
-			<div id="signaturePreview"></div>
+
+			<select id="referenceSelection" class="form-control" name="profile[reference_member]">
+				<option value="">Select</option>
+				{% for member in activeMembers %}
+					<option value="{{member.id}}">
+						{{member.first_name ~ ' ' ~ member.last_name ~' - '~ member.login}}
+					</option>
+				{% endfor %}
+			</select>
+			<div class="text-danger" data-validate-for="profile.reference_member"></div>
 		</div>
+
 
 	</div>
 
@@ -133,7 +138,7 @@
 		<div class="form-group col">
 			<label for="blood_group">Blood Group</label>
 			<select name="profile[blood_group]" class="form-control">
-				<option value="select">Select</option>
+				<option value="">Select</option>
 				<option value="A+">A +</option>
 				<option value="A-">A -</option>
 				<option value="B+">B +</option>
@@ -232,6 +237,55 @@
 		</div>
 
 	</div>
+
+	<div>
+		<h5>Uploads</h5>
+		<hr>
+	</div>
+	<div class="form-row">
+
+
+		<div class="form-group col ">
+			<label for="avatar">Profile Image
+				<span class="text-danger">*</span>
+			</label>
+			<input data-request-ajax-global="true" data-request-files data-request="onPhotoUpload" data-request-update="imagePreview:'#avatarPreview'" accept="image/*" type="file" name="avatar" class="form-control" id="avatar"/>
+
+			<small class="form-text text-muted">250x250 image.</small>
+
+			<div class="text-danger" data-validate-for="avatar"></div>
+			<div id="avatarPreview"></div>
+		</div>
+		<div class="form-group col ">
+			<label for="avatar">Upload Signature
+				<span class="text-danger">*</span>
+			</label>
+			<input data-request-files data-request-update="imagePreview:'#signaturePreview'" data-request="onSignatureUpload" accept="image/*" type="file" name="signature" class="form-control" id="signature">
+			<small class="form-text text-muted">max 100x100 image.</small>
+			<div class="text-danger" data-validate-for="signature"></div>
+			<div id="signaturePreview"></div>
+		</div>
+
+		<div class="form-group col ">
+			<label for="user_nid_copy">Your NID
+				<span class="text-danger">*</span>
+			</label>
+			<input data-request-files data-request-update="imagePreview:'#userNidPreview'" data-request="onUserNIDUpload" accept="image/*" type="file" name="user_nid_copy" class="form-control" id="user_nid_copy">
+			<div class="text-danger" data-validate-for="user_nid_copy"></div>
+			<div id="userNidPreview"></div>
+		</div>
+
+		<div class="form-group col ">
+			<label for="nominee_nid_copy">Nominee's NID
+				<span class="text-danger">*</span>
+			</label>
+			<input data-request-files data-request-update="imagePreview:'#NomineeNidPreview'" data-request="onNomineeNIDUpload" accept="image/*" type="file" name="nominee_nid_copy" class="form-control" id="nominee_nid_copy">
+			<div class="text-danger" data-validate-for="nominee_nid_copy"></div>
+			<div id="NomineeNidPreview" style="max-width:300px"></div>
+		</div>
+
+	</div>
+
 
 	<button data-toggle="modal" href="#contentBasic" type="sumit" data-request-files data-request="onPreview" class="btn btn-primary" data-attach-loading>Preview</button>
 

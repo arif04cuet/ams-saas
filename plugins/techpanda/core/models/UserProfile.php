@@ -72,6 +72,11 @@ class UserProfile extends Model
 
     ];
 
+    public $attachOne = [
+        'user_nid_copy' => 'System\Models\File',
+        'nominee_nid_copy' => 'System\Models\File',
+    ];
+
     public static function getFromUser($user)
     {
 

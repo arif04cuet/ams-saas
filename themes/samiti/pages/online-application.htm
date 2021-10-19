@@ -12,10 +12,31 @@ use System\Classes\MailManager;
 use Renatio\DynamicPDF\Classes\PDF;
 
 function onStart(){
-    $this['rollList'] = MemberRoll::all();
+
+    $allMembers = User::select(['login'])
+                ->where('is_activated',1)
+                ->orWhereNotNull('deleted_at')
+                ->get()
+                ->pluck('login')
+                ->map(function($item){
+                    return substr($item,-4);
+                })
+                ->toArray();
+
+    $this['rollList'] = MemberRoll::select(['name','roll','id'])
+                    ->orderBy('roll')
+                    ->get()
+                    ->filter(function($item) use($allMembers){
+                        return !in_array($item->roll,$allMembers);
+                });
 }
 
 function onSubmitRoll(){
+
+    $this['activeMembers']  = User::select(['id','first_name','last_name','login'])
+                            ->where('is_activated',1)
+                            ->get();
+
     $this['member']  = MemberRoll::find(post('roll_id'));
     $this['cadres']  =$cadres =  User::select(['cadre'])
                                 ->pluck('cadre')
@@ -26,6 +47,46 @@ function onSubmitRoll(){
     return [
         '#new_application_form'=> $this->renderPartial('newApplication/form')
     ];
+}
+
+
+function onNomineeNIDUpload(){
+    $files = Input::all();
+    $rules = [
+        'nominee_nid_copy'=>'image'
+    ];
+
+    $validator = Validator::make(
+        $files,
+        $rules
+    );
+
+    if($validator->fails()){
+        throw new ValidationException($validator);
+    }
+
+    $file = (new File())->fromPost($files['nominee_nid_copy']);
+    $this['url'] = $file->getPath();
+}
+
+
+function onUserNIDUpload(){
+    $files = Input::all();
+    $rules = [
+        'user_nid_copy'=>'image'
+    ];
+
+    $validator = Validator::make(
+        $files,
+        $rules
+    );
+
+    if($validator->fails()){
+        throw new ValidationException($validator);
+    }
+
+    $file = (new File())->fromPost($files['user_nid_copy']);
+    $this['url'] = $file->getPath();
 }
 
 function onSignatureUpload(){
@@ -69,7 +130,7 @@ function onPhotoUpload(){
 
 function onPreview(){
     $data = request()->all();
-    //$this->validateData($data);
+    $data['rMember'] = isset($data['profile']['reference_member'])?User::find($data['profile']['reference_member']):'';
 
     if(Input::hasFile('avatar')){
         $data['avatar_url'] = (new File())->fromPost($data['avatar'])->getThumb(200, 200, ['mode' => 'crop']);
@@ -78,6 +139,16 @@ function onPreview(){
     if(Input::hasFile('signature')){
         $data['signature_url'] = (new File())->fromPost($data['signature'])->getThumb(200, 200, ['mode' => 'crop']);
         unset($data['signature']);
+    }
+
+     if(Input::hasFile('user_nid_copy')){
+        $data['user_nid_copy_url'] = (new File())->fromPost($data['user_nid_copy'])->getPath();
+        unset($data['user_nid_copy']);
+    }
+
+     if(Input::hasFile('nominee_nid_copy')){
+        $data['nominee_nid_copy_url'] = (new File())->fromPost($data['nominee_nid_copy'])->getPath();
+        unset($data['nominee_nid_copy']);
     }
 
 
@@ -95,18 +166,24 @@ function ValidateData($data){
         'user.mobile'=>'required',
         'user.cadre'=>'required',
         'profile.official_mobile'=>'required',
+        'profile.father_name'=>'required',
         'user.designation'=>'required',
         'user.office_name'=>'required',
         'profile.roll'=>'required',
         'profile.nid'=>'required',
         'profile.dob'=>'required',
         'profile.sex'=>'required',
+        'profile.reference_member'=>'required',
         'profile.present_house_no'=>'required',
         'profile.present_road_no'=>'required',
         'profile.present_address'=>'required',
         'profile.permanent_house_no'=>'required',
         'profile.permanent_road_no'=>'required',
         'profile.permanent_address'=>'required',
+        'avatar'=>'required',
+        'signature'=>'required',
+        'user_nid_copy'=>'required',
+        'nominee_nid_copy'=>'required'
 
     ];
 
@@ -123,7 +200,7 @@ function ValidateData($data){
 }
 function onSubmitApplication(){
 
-    $data = post();
+    $data = Input::all();
     $this->validateData($data);
 
     DB::transaction(function() use($data){
@@ -137,20 +214,20 @@ function onSubmitApplication(){
 
     //save user
     $user = User::create($userData);
+
     $user->role = Backend\Models\UserRole::where('code','member')->first();
-
-    if (Input::hasFile('avatar'))
-        $user->avatar = Input::file('avatar');
-    if (Input::hasFile('signature'))
-        $user->signature = Input::file('signature');
-
-
+    $user->avatar = Input::file('avatar');
+    $user->signature = Input::file('signature');
     $user->save();
 
     //save profile
     $profileData = array_filter($data['profile']);
     $profileData['user_id'] = $user->id;
     $profile = UserProfile::create($profileData);
+
+    $profile->user_nid_copy = Input::file('user_nid_copy');
+    $profile->nominee_nid_copy = Input::file('nominee_nid_copy');
+    $profile->save();
 
     // fire event
     Event::fire('online.application.submitted', [$user]);
@@ -168,6 +245,7 @@ function onSubmitApplication(){
 }
 ?>
 ==
+
 <h3>Online application</h3>
 <hr>
 <div>
@@ -185,10 +263,10 @@ function onSubmitApplication(){
 
             <div class="form-group col-md-6 ">
                 <label for="avatar">Select Name & Roll </label>
-                <select class="form-control" name="roll_id" data-request="onSubmitRoll">
+                <select id="rollSelection" class="form-control" name="roll_id" data-request="onSubmitRoll">
                     <option value="">Select</option>
                     {% for roll in rollList %}
-                    <option value="{{roll.id}}">{{roll.name ~ '-'~ roll.roll}}</option>
+                    <option value="{{roll.id}}">{{roll.name ~ ' - '~ roll.roll}}</option>
                     {% endfor %}
                 </select>
             </div>
