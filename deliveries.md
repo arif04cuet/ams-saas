@@ -9,8 +9,8 @@
 ## Progress plan
 
 - [x] Feedback on new application form.
-- [] Make Preview view for new member application form
-- [] add print option
+- [x] Make Preview view for new member application form
+- [x] add print option
 
 ## Feedback
 - [x] Roll dropdown only show those are not member, search list by name/roll

@@ -12,10 +12,15 @@ use System\Classes\MailManager;
 use Renatio\DynamicPDF\Classes\PDF;
 
 function onStart(){
-    $this['rollList'] = MemberRoll::all();
+    $this['rollList'] = MemberRoll::unRegisteredMembers();
 }
 
 function onSubmitRoll(){
+
+    $this['activeMembers']  = User::select(['id','first_name','last_name','login'])
+                            ->where('is_activated',1)
+                            ->get();
+
     $this['member']  = MemberRoll::find(post('roll_id'));
     $this['cadres']  =$cadres =  User::select(['cadre'])
                                 ->pluck('cadre')
@@ -52,7 +57,8 @@ function onPhotoUpload(){
 
 function onPreview(){
     $data = request()->all();
-    //$this->validateData($data);
+
+    $data['rMember'] = isset($data['profile']['reference_member'])? User::find($data['profile']['reference_member']):'';
 
     if(Input::hasFile('avatar')){
         $data['avatar_url'] = (new File())->fromPost($data['avatar'])->getThumb(200, 200, ['mode' => 'crop']);
@@ -77,6 +83,8 @@ function ValidateData($data){
         'user.mobile'=>'required',
         'user.cadre'=>'required',
         'profile.official_mobile'=>'required',
+        'profile.father_name'=>'required',
+        'profile.reference_member'=>'required',
         'user.designation'=>'required',
         'user.office_name'=>'required',
         'profile.roll'=>'required',
@@ -89,6 +97,7 @@ function ValidateData($data){
         'profile.permanent_house_no'=>'required',
         'profile.permanent_road_no'=>'required',
         'profile.permanent_address'=>'required',
+        'avatar'=>'required',
 
     ];
 
@@ -105,7 +114,7 @@ function ValidateData($data){
 }
 function onSubmitApplication(){
 
-    $data = post();
+    $data = Input::all();
     $this->validateData($data);
 
     DB::transaction(function() use($data){
@@ -130,6 +139,8 @@ function onSubmitApplication(){
     $profileData = array_filter($data['profile']);
     $profileData['user_id'] = $user->id;
     $profile = UserProfile::create($profileData);
+
+    $data['avatar_url'] = $user->avatar->getPath();
 
     // fire event
     Event::fire('associate.application.submitted', [$user]);
@@ -164,7 +175,7 @@ function onSubmitApplication(){
 
             <div class="form-group col-md-6 ">
                 <label for="avatar">Select Name & Roll </label>
-                <select class="form-control" name="roll_id" data-request="onSubmitRoll">
+                <select id="rollSelection" class="form-control" name="roll_id" data-request="onSubmitRoll">
                     <option value="">Select</option>
                     {% for roll in rollList %}
                     <option value="{{roll.id}}">{{roll.name ~ '-'~ roll.roll}}</option>

@@ -7,20 +7,21 @@
 			<label for="name_en">Name (In English)
 				<span class="text-danger">*</span>
 			</label>
-			<input value="{{member.name}}" type="text" name="user[first_name]" class="form-control" id="name_en">
+			<input type="text" name="user[first_name]" class="form-control" id="name_en">
 			<div class="text-danger" data-validate-for="user.first_name"></div>
 		</div>
 		<div class="form-group col">
 			<label for="name_bn">Name (In Bangla)
 				<span class="text-danger">*</span>
 			</label>
-			<input type="text" name="user[fullname_bn]" class="form-control" id="name_bn">
+			<input value="{{member.name}}" type="text" name="user[fullname_bn]" class="form-control" id="name_bn">
 			<div class="text-danger" data-validate-for="user.fullname_bn"></div>
 		</div>
 
 
 		<div class="form-group col ">
 			<label for="avatar">Profile Image
+				<span class="text-danger">*</span>
 			</label>
 			<input data-request-ajax-global="true" data-request-files data-request="onPhotoUpload" data-request-update="imagePreview:'#avatarPreview'" accept="image/*" type="file" name="avatar" class="form-control" id="avatar"/>
 
@@ -30,6 +31,21 @@
 			<div id="avatarPreview"></div>
 		</div>
 
+		<div class="form-group col-md-4">
+			<label for="ReferenceSelection">Reference Member
+				<span class="text-danger">*</span>
+			</label>
+
+			<select id="referenceSelection" class="form-control" name="profile[reference_member]">
+				<option value="">Select</option>
+				{% for member in activeMembers %}
+					<option value="{{member.id}}">
+						{{member.first_name ~ ' ' ~ member.last_name ~' - '~ member.login}}
+					</option>
+				{% endfor %}
+			</select>
+			<div class="text-danger" data-validate-for="profile.reference_member"></div>
+		</div>
 
 	</div>
 
@@ -102,6 +118,14 @@
 			</label>
 			<input type="text" name="user[office_name]" class="form-control" id="office_address">
 			<div class="text-danger" data-validate-for="user.office_name"></div>
+		</div>
+
+		<div class="form-group col">
+			<label for="father_name">Father Name
+				<span class="text-danger">*</span>
+			</label>
+			<input type="text" name="profile[father_name]" class="form-control" id="father_name">
+			<div class="text-danger" data-validate-for="profile.father_name"></div>
 		</div>
 
 

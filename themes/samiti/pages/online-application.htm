@@ -13,22 +13,7 @@ use Renatio\DynamicPDF\Classes\PDF;
 
 function onStart(){
 
-    $allMembers = User::select(['login'])
-                ->where('is_activated',1)
-                ->orWhereNotNull('deleted_at')
-                ->get()
-                ->pluck('login')
-                ->map(function($item){
-                    return substr($item,-4);
-                })
-                ->toArray();
-
-    $this['rollList'] = MemberRoll::select(['name','roll','id'])
-                    ->orderBy('roll')
-                    ->get()
-                    ->filter(function($item) use($allMembers){
-                        return !in_array($item->roll,$allMembers);
-                });
+    $this['rollList'] = MemberRoll::unRegisteredMembers();
 }
 
 function onSubmitRoll(){
@@ -110,7 +95,7 @@ function onSignatureUpload(){
 
 function onPhotoUpload(){
     $image = Input::all();
-    traceLog($image);
+    //traceLog($image);
     $rules = [
         'avatar'=>'image|dimensions:max_width=250,max_height=250'
     ];
@@ -228,6 +213,8 @@ function onSubmitApplication(){
     $profile->user_nid_copy = Input::file('user_nid_copy');
     $profile->nominee_nid_copy = Input::file('nominee_nid_copy');
     $profile->save();
+
+    $data['avatar_url'] = $user->avatar->getPath();
 
     // fire event
     Event::fire('online.application.submitted', [$user]);

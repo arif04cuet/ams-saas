@@ -2,6 +2,7 @@
 
 namespace Techpanda\Core\Models;
 
+use Backend\Models\User;
 use Model;
 use October\Rain\Database\Traits\Purgeable;
 use October\Rain\Database\Traits\SoftDelete;
@@ -35,4 +36,26 @@ class MemberRoll extends Model
         'name' => 'string|required',
         'roll' => 'string|required',
     ];
+
+    public static function unRegisteredMembers()
+    {
+        $allMembers = User::select(['login'])
+            ->where('is_activated', 1)
+            ->orWhereNotNull('deleted_at')
+            ->get()
+            ->pluck('login')
+            ->map(function ($item) {
+                return substr($item, -4);
+            })
+            ->toArray();
+
+        $list = MemberRoll::select(['name', 'roll', 'id'])
+            ->orderBy('roll')
+            ->get()
+            ->filter(function ($item) use ($allMembers) {
+                return !in_array($item->roll, $allMembers);
+            });
+
+        return $list;
+    }
 }
