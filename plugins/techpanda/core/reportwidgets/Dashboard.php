@@ -30,6 +30,8 @@ use Techpanda\Core\Models\Transaction;
 use ValidationException;
 use Validator;
 
+use function Matrix\trace;
+
 class Dashboard extends ReportWidgetBase
 {
     /**
@@ -109,7 +111,19 @@ class Dashboard extends ReportWidgetBase
         $association_id = Helper::getAssociation()->id;
 
         $this->vars['association'] = Association::find($association_id);
-        $this->vars['members'] = User::with('avatar')->where('association_id', Helper::getAssociationId())->orderBy('login', 'asc')->get();
+        $userQuery =  User::with(['avatar', 'role'])
+            ->where('association_id', Helper::getAssociationId())
+            ->where(function ($q) {
+                $q->where('is_activated', 1)->orWhereNotNull('deleted_at');
+            })
+            ->withTrashed()
+            ->orderBy('login', 'asc');
+
+        traceLog(vsprintf(str_replace('?', '%s', $userQuery->toSql()), collect($userQuery->getBindings())->map(function ($binding) {
+            return is_numeric($binding) ? $binding : "'{$binding}'";
+        })->toArray()));
+
+        $this->vars['members'] = $userQuery->get();
         $this->vars['contents'] = Content::with('category')->latest()->get();
 
         // transaction details form

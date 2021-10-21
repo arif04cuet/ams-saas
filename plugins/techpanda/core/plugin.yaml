@@ -44,6 +44,21 @@ permissions:
     techpanda.core.bank_branch_import_export:
         tab: MIS
         label: 'Upload Bank Branch'
+    techpanda.core.dashboard_home_tab:
+        tab: Dashboard
+        label: 'Dashboard Home Tab'
+    techpanda.core.dashboard_deposit_tab:
+        tab: Dashboard
+        label: 'Dashboard Deposit Tab'
+    techpanda.core.dashboard_members_tab:
+        tab: Dashboard
+        label: 'Dashboard Members Tab'
+    techpanda.core.dashboard_committee_tab:
+        tab: Dashboard
+        label: 'Dashboard Committee Tab'
+    techpanda.core.dashboard_inbox_tab:
+        tab: Dashboard
+        label: 'Dashboard Inbox Tab'
 navigation:
     main-menu-mis:
         label: MIS

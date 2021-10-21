@@ -1,30 +1,54 @@
 <div class="row">
-    <div class="col-md-3">
+	<div class="col-md-3">
 
-        <?= $this->makePartial('leftbar', ['association' => $association]) ?>
+		<?= $this->makePartial('leftbar', ['association' => $association]) ?>
 
-    </div>
+	</div>
 
-    <div class="col-md-6 ">
-
-
-        <div class="control-tabs content-tabs" data-control="tab">
-            <ul class="nav nav-tabs">
-                <li class="active"><a href="#contentTabOne">Home</a></li>
-                <li class="diposit-now"><a href="#deposit">Deposit Now</a></li>
-                <li><a href="#contentTabTwo">Members</a></li>
-                <li><a href="#contentTabThree">Committees</a></li>
-                <li><a href="#inbox">Inbox</a></li>
+	<div class="col-md-6 ">
 
 
+		<div class="control-tabs content-tabs" data-control="tab">
+			<ul class="nav nav-tabs" id="features">
 
-            </ul>
-            <div class="tab-content" style="background-color: white;padding:10px">
-                <br>
-                <div class="tab-pane active">
-                    <?php //date("d/m/Y H:i:s")?>
+				<?php if($this->user->hasAccess('techpanda.core.dashboard_home_tab')) :?>
+				<li class="active">
+					<a href="#contentTabOne">Home</a>
+				</li>
+				<?php endif; ?>
 
-                    <?= $this->makePartial('home', [
+				<?php if($this->user->hasAccess('techpanda.core.dashboard_deposit_tab')) :?>
+				<li class="diposit-now">
+					<a href="#deposit">Deposit Now</a>
+				</li>
+				<?php endif; ?>
+
+				<?php if($this->user->hasAccess('techpanda.core.dashboard_members_tab')) :?>
+				<li>
+					<a href="#contentTabTwo">Members</a>
+				</li>
+				<?php endif; ?>
+
+				<?php if($this->user->hasAccess('techpanda.core.dashboard_committee_tab')) :?>
+				<li>
+					<a href="#contentTabThree">Committees</a>
+				</li>
+				<?php endif; ?>
+
+				<?php if($this->user->hasAccess('techpanda.core.dashboard_inbox_tab')) :?>
+				<li>
+					<a href="#inbox">Inbox</a>
+				</li>
+				<?php endif; ?>
+
+			</ul>
+			<div class="tab-content" style="background-color: white;padding:10px">
+				<br>
+				<?php if($this->user->hasAccess('techpanda.core.dashboard_home_tab')) :?>
+				<div class="tab-pane active">
+
+
+					<?= $this->makePartial('home', [
                         'tnx_list' => $tnx_list,
                         'user' => $user,
                         'heads' => $heads,
@@ -32,68 +56,76 @@
                     ])
                     ?>
 
-                </div>
+				</div>
+				<?php endif; ?>
 
+				<?php if($this->user->hasAccess('techpanda.core.dashboard_deposit_tab')) :?>
+				<div class="tab-pane">
 
-                <div class="tab-pane">
+					<?php if(date('d') <= 10 OR 1) :?>
 
-                    <?php if(date('d') <= 10 OR 1) :?>
-
-                    <?= $this->makePartial('tnx_form', [
+					<?= $this->makePartial('tnx_form', [
                             'form' => $tnx_form
                         ]) ?>
 
-                    <?php else: ?>
+				<?php else: ?>
 
-                    <p><?= Lang::get('techpanda.core::lang.message.deposit_form_showing_text');?></p>
+					<p><?= Lang::get('techpanda.core::lang.message.deposit_form_showing_text');?></p>
 
-                    <?php endif; ?>
+					<?php endif; ?>
 
-                </div>
+				</div>
+				<?php endif; ?>
 
+				<?php if($this->user->hasAccess('techpanda.core.dashboard_members_tab')) :?>
+				<div class="tab-pane">
 
-                <div class="tab-pane">
+					<?= $this->makePartial('members', ['members' => $members]) ?>
 
-                    <?= $this->makePartial('members', ['members' => $members]) ?>
+				</div>
+				<?php endif; ?>
 
-                </div>
+				<?php if($this->user->hasAccess('techpanda.core.dashboard_committee_tab')) :?>
+				<div class="tab-pane">
 
-                <div class="tab-pane">
+					<?= $this->makePartial('committees', ['association' => $association]) ?>
 
-                    <?= $this->makePartial('committees', ['association' => $association]) ?>
+				</div>
+				<?php endif; ?>
 
-                </div>
+				<?php if($this->user->hasAccess('techpanda.core.dashboard_inbox_tab')) :?>
+				<div class="tab-pane">
 
-                <div class="tab-pane">
+					<?= $this->makePartial('contents', ['contents' => $contents]) ?>
 
-                    <?= $this->makePartial('contents', ['contents' => $contents]) ?>
-
-                </div>
-
-
-
-
-            </div>
-        </div>
-
-
-
-    </div>
-
-    <div class="col-md-3" id="memberDetails">
+				</div>
+				<?php endif; ?>
 
 
-    </div>
+			</div>
+		</div>
+
+
+	</div>
+
+	<div class="col-md-3" id="memberDetails"></div>
 
 </div>
 
-<script> $.request('onViewMember') </script>
+<script>
+	$.request('onViewMember')
+$(document).ready(function () {
+
+$("#features a:first").tab('show');
+$(".tab-content div:first").addClass("active");
+});
+</script>
 
 <style>
-    .sticky {
+	.sticky {
 
-        position: fixed;
-        top: 10;
-        right: 10;
-    }
+		position: fixed;
+		top: 10;
+		right: 10;
+	}
 </style>

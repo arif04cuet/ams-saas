@@ -1,21 +1,38 @@
 <tr>
-    <td>
-        <?php if ($member->avatar): ?>
-        <img src="<?= $member->avatar->getThumb(80,60)?>" alt="">
-        <?php else: ?>
-        <i class="fas text-success fa-4x fa-user-tie"></i>
-        <?php endif; ?>
-    </td>
-    <td><?= $member->login ?></td>
-    <td><?= $member->first_name .' '.$member->last_name  ?></td>
-    <td>
-        <a href="tel:<?= $member->mobile ?>"><?= $member->mobile?></a>
-    </td>
+	<td>
+		<?php if ($member->avatar): ?>
+		<img style="max-width:50px" src="<?= $member->avatar->getThumb(80,60)?>" alt="">
+		<?php else: ?>
+		<i class="fas text-success fa-4x fa-user-tie"></i>
+		<?php endif; ?>
+	</td>
+	<td>
+		<?= $member->login ?>
+	</td>
+	<td>
+		<?= $member->first_name .' '.$member->last_name  ?>
+	</td>
+	<td>
+		<a href="tel:<?= $member->mobile ?>">
+			<?= $member->mobile?>
+		</a>
+	</td>
 
-    <td><?= $member->cadre ?></td>
+	<td>
+		<?= $member->cadre ?>
+	</td>
+	<td>
+		<?= $member->is_activated ? 1:0 ?>
+	</td>
+	<td>
+		<?= $member->role->code ?>
+	</td>
 
-    <td> <a href="" data-request-update="member_details: '#memberDetails'" data-request="onViewMember"
-            data-request-data="login:'<?= $member->login ?>'">
+	<td>
+		<a href="" data-request-update="member_details: '#memberDetails'" data-request="onViewMember"
+			data-request-data="login:'<?= $member->login ?>'">
 
-            <i class=" fas fa-arrow-right"></i></a></td>
+			<i class=" fas fa-arrow-right"></i>
+		</a>
+	</td>
 </tr>
