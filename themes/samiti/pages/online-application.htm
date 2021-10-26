@@ -20,6 +20,7 @@ function onSubmitRoll(){
 
     $this['activeMembers']  = User::select(['id','first_name','last_name','login'])
                             ->where('is_activated',1)
+                            ->where('association_id', 1)
                             ->get();
 
     $this['member']  = MemberRoll::find(post('roll_id'));

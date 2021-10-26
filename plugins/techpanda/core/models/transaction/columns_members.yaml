@@ -3,21 +3,26 @@ columns:
         label: 'Submitted On'
         type: date
         sortable: true
+        clickable: false
     title:
         label: 'FY'
         type: text
         sortable: true
+        clickable: false
     heads:
         label: Heads
         type: partial
         sortable: false
+        clickable: false
         path: $/techpanda/core/models/transaction/partial/_heads.htm
     status:
         label: Status
         type: text
         sortable: false
+        clickable: false
     amount:
         label: 'Amount (Tk.)'
         type: partial
         sortable: false
+        clickable: false
         path: $/techpanda/core/models/transaction/partial/_amount.htm

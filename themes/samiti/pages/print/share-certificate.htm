@@ -1,0 +1,130 @@
+title=Share Certificate
+layout=print
+url="/print/share-certificate/:id"
+==
+
+function onStart(){
+$id = $this->param('id');
+$loggedIn = BackendAuth::check();
+$user = BackendAuth::getUser();
+$profile = $user->profile;
+
+$transaction = Transaction::with('headfees')
+->where('id',$id)
+->where('user_id',$user->id)
+->first();
+
+if($loggedIn || !$transaction)
+return Backend::redirect('/');
+
+$name = !empty($user->fullname_bn) ? $user->fullname_bn : $user->first_name.' '.$user->last_name;
+$isHusband = $profile->sex =='Female' && $profile->marital_status == 'Married' && $profile->spouse_name
+? true : false;
+$father_husband = $isHusband ? $profile->spouse_name : $profile->father_name;
+
+$this['data'] = [
+'share_certificate_no' => rand(100,1000),
+'name' => $name,
+'father_husband' => $father_husband,
+'member_no' => $user->login,
+'share_count' => '',
+'husband'=>$isHusband
+];
+}
+
+==
+<style>
+    @media print {
+        .topbar {
+            display: none;
+        }
+    }
+</style>
+<div class="row topbar">
+    <div class="col">
+        <div class="d-flex justify-content-between">
+            <a href="/backend">Back</a>
+            <button class="btn btn-primary" onclick="window.print()">Print</button>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col">
+        <div class="d-flex justify-content-center">
+            <img src="{{ 'p60-header-updated.png'|media}}" />
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+
+        <div class="w-75 mx-auto">
+            <div class="row mt-3 mb-5">
+                <div class="col">
+                    শেয়ার সার্টিফিকেট নং - (অটোজেনারেট হবে)
+
+                </div>
+                <div class="col text-center">
+                    তারিখ ও সময় : {{ "now"|date("d/m/Y h:i:s A")}}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col text-center">
+
+                    <img width="140px"
+                        src="http://127.0.0.1:8000/storage/app/uploads/public/5f4/a66/31d/thumb_92_200_300_0_0_auto.png"
+                        alt="">
+
+                    <h1 class="my-4">শেয়ার সার্টিফিকেট</h1>
+                    <div class="my-2">
+                        <p>অনুমোদিত মূলধন ১০০,০০,০০,০০০ ( একশত কোটি ) টাকা । </p>
+                        <p>প্রতিটি ১০০ (একশত) টাকা মূল্যের ১,০০,০০,০০০ ( এক কোটি ) ভাগে বিভক্ত । </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col my-5">
+                    <p>এতদ্বারা প্রত্যয়ন করা যাইতেছে যে, জনাব ......।। পিতা / স্বামী : ......... সদস্য নং : ............
+                        অত্র কোঅপারেটিভ সোসাইটির উপ-আইনের ১৯ নং অনুচ্ছেদ মোতাবেক ......। টি শেয়ারের অংশীদার । </p>
+                    <p>অদ্য .........।। তারিখে অত্র কোঅপারেটিভ সোসাইটির সীলমোহর যুক্ত মতে প্রদত্ত হইল । </p>
+
+                </div>
+            </div>
+
+
+            <div class="row my-5">
+                <div class="col text-center">
+                    <div class="text-muted mb-2">স্বাক্ষর</div>
+                    <div> মোঃ উসমান গনি</div>
+                    <div><strong>সম্পাদক</strong></div>
+                    <div>বিসিএস ( পি ৬০ এফটিসি ) কোঅপারেটিভ সোসাইটি লিমিটেড</div>
+                    <div> জিপি গ - ৯৫ , ওয়ারলেস গেট , মহাখালী , ঢাকা</div>
+                    <div>মোবাইল : ০১৭১৬-০২২৮৪০</div>
+
+                </div>
+
+                <div class="col text-center">
+
+                    <div class="text-muted mb-2">স্বাক্ষর</div>
+                    <div> মোঃ সোহাগ হোসেন</div>
+                    <div><strong>সভাপতি</strong></div>
+                    <div>বিসিএস ( পি ৬০ এফটিসি ) কোঅপারেটিভ সোসাইটি লিমিটেড</div>
+                    <div> জিপি গ - ৯৫ , ওয়ারলেস গেট , মহাখালী , ঢাকা</div>
+                    <div>মোবাইল : ০১৮১৬ ৫৭৪০৫৬</div>
+                </div>
+
+
+            </div>
+
+
+
+
+        </div>
+    </div>
+
+</div>

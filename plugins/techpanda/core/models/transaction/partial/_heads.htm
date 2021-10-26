@@ -1,5 +1,13 @@
 <ul style="list-style: none;padding: 0;">
     <?php foreach($record->heads() as $code=>$head): ?>
-    <li><?= $head['name'] . ' - '. number_format($head['amount'])?></li>
+    <li>
+        <?= $head['name'] . ' - '. number_format($head['amount'])?>
+        <?php if ($code == 'share') :?>
+        <a target="__blank" title="Download Certificate" href="/print/share-certificate/<?= $record->id?>"
+            class="text-primary">
+            <i class="icon-cloud-download"></i>
+        </a>
+        <?php endif ?>
+    </li>
     <?php endforeach;?>
 </ul>

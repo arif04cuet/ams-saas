@@ -65,7 +65,9 @@ navigation:
         url: techpanda/core/transactions
         icon: icon-life-ring
         permissions:
-            - 'techpanda.core.*'
+            - techpanda.core.backend.manage_users
+            - techpanda.core.manage_transactions
+            - techpanda.core.manage_contents
         sideMenu:
             side-menu-member:
                 label: Members

@@ -167,6 +167,7 @@ class Dashboard extends ReportWidgetBase
         return $members;
     }
 
+
     //events
 
     public function onSubmitDepositStatementRequest()
