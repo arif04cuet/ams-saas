@@ -2,6 +2,7 @@ title=Share Certificate
 layout=print
 url="/print/share-certificate/:id"
 ==
+use Techpanda\Core\Models\Transaction;
 
 function onStart(){
 $id = $this->param('id');
@@ -9,13 +10,22 @@ $loggedIn = BackendAuth::check();
 $user = BackendAuth::getUser();
 $profile = $user->profile;
 
-$transaction = Transaction::with('headfees')
+$transaction = Transaction::with('headfees.head')
+->whereHas('headfees',function($headfree){
+$headfree->whereHas('head',function($head){
+$head->where('code','share');
+});
+})
 ->where('id',$id)
 ->where('user_id',$user->id)
 ->first();
 
-if($loggedIn || !$transaction)
+if(!$loggedIn || !$transaction)
 return Backend::redirect('/');
+
+$shareQuantity = $transaction->headfees->filter(function($item){
+return $item['head']['code'] == 'share';
+})->first()->pivot->quantity;
 
 $name = !empty($user->fullname_bn) ? $user->fullname_bn : $user->first_name.' '.$user->last_name;
 $isHusband = $profile->sex =='Female' && $profile->marital_status == 'Married' && $profile->spouse_name
@@ -27,8 +37,9 @@ $this['data'] = [
 'name' => $name,
 'father_husband' => $father_husband,
 'member_no' => $user->login,
-'share_count' => '',
-'husband'=>$isHusband
+'share_count' => $shareQuantity,
+'husband'=>$isHusband,
+'tnx_date'=>$transaction->tnx_date
 ];
 }
 
@@ -64,7 +75,7 @@ $this['data'] = [
         <div class="w-75 mx-auto">
             <div class="row mt-3 mb-5">
                 <div class="col">
-                    শেয়ার সার্টিফিকেট নং - (অটোজেনারেট হবে)
+                    শেয়ার সার্টিফিকেট নং - {{data.share_certificate_no}}
 
                 </div>
                 <div class="col text-center">
@@ -89,9 +100,16 @@ $this['data'] = [
 
             <div class="row">
                 <div class="col my-5">
-                    <p>এতদ্বারা প্রত্যয়ন করা যাইতেছে যে, জনাব ......।। পিতা / স্বামী : ......... সদস্য নং : ............
-                        অত্র কোঅপারেটিভ সোসাইটির উপ-আইনের ১৯ নং অনুচ্ছেদ মোতাবেক ......। টি শেয়ারের অংশীদার । </p>
-                    <p>অদ্য .........।। তারিখে অত্র কোঅপারেটিভ সোসাইটির সীলমোহর যুক্ত মতে প্রদত্ত হইল । </p>
+                    <p>এতদ্বারা প্রত্যয়ন করা যাইতেছে যে, জনাব <b>{{ data.name}}</b> {{ data.husband ? 'স্বামী':'পিতা'}}
+                        :
+                        <b>{{data.father_husband ? data.father_husband :'....'}}</b> সদস্য
+                        নং : <b>{{data.member_no}}</b>
+                        অত্র কোঅপারেটিভ সোসাইটির উপ-আইনের ১৯ নং অনুচ্ছেদ মোতাবেক <b>{{data.share_count}}</b> টি শেয়ারের
+                        অংশীদার ।
+                    </p>
+                    <p>অদ্য <b>{{data.tnx_date|date("d/m/Y")}}</b> তারিখে অত্র কোঅপারেটিভ সোসাইটির সীলমোহর যুক্ত মতে
+                        প্রদত্ত হইল ।
+                    </p>
 
                 </div>
             </div>
