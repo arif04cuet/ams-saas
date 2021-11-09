@@ -21,7 +21,9 @@ class QTransactionExport implements WithMultipleSheets
 
     public function __construct($tenantId, $fiscalYear, $quarter)
     {
-        $this->tenant = Association::with('members')->find($tenantId);
+        $this->tenant = Association::with(['members' => function ($q) {
+            $q->whereIn('role_id', [1, 2]);
+        }])->find($tenantId);
         $this->fiscalYear = $fiscalYear;
         $this->quarter = $quarter;
     }

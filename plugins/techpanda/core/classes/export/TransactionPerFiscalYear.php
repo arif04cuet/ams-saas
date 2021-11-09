@@ -20,6 +20,7 @@ use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use Techpanda\Core\Classes\Helper;
 use Techpanda\Core\Models\AccountHead;
 use Techpanda\Core\Models\Association;
+use Techpanda\Core\Models\MonthlySaving;
 use Techpanda\Core\Models\Transaction;
 
 class TransactionPerFiscalYear implements FromArray, WithTitle, WithHeadings, WithEvents, ShouldAutoSize
@@ -85,7 +86,7 @@ class TransactionPerFiscalYear implements FromArray, WithTitle, WithHeadings, Wi
         $firstRow = ['Sl No.', 'Member No.', 'Name', 'Designstion', 'Mobile'];
         for ($i = 0; $i < 14; $i++) {
             $firstRow[] = 'Savings';
-            $firstRow[] = 'Share';
+            $firstRow[] = 'Tnx Date';
         }
 
         $data = $this->dataByFiscalYear($this->fiscalYear);
@@ -224,7 +225,7 @@ class TransactionPerFiscalYear implements FromArray, WithTitle, WithHeadings, Wi
             //months value
             $months = $transaction->getPaidMonthsByFiscalYear($fiscalYear, $member->id, [Transaction::STATUS_PAID]);
 
-            if ($member->login == '61357ac79efe3')
+            if ($member->login == '003E511')
                 traceLog($months);
 
             //filter out close members
@@ -247,12 +248,12 @@ class TransactionPerFiscalYear implements FromArray, WithTitle, WithHeadings, Wi
             $row[] = $headTotals[AccountHead::getShareHeadName()];
 
 
-
+            $savingsDates = MonthlySaving::monthSavingsByUserWithDate($member->id, $from, $to);
             foreach ($fiscalYearMonths as $my) {
 
                 list($month, $year) = explode('-', $my);
                 $row[] = in_array($month, $months) ? $monthSaving : 0;
-                $row[] = 0;
+                $row[] = isset($savingsDates[$month]) ? date("d-m-Y", strtotime($savingsDates[$month]->tnx_date)) : 0;
             }
 
             //fiscal year ending balance

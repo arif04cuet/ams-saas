@@ -67,7 +67,7 @@ class Transaction extends Model
     ];
 
     public $hasMany = [
-        'monthlySavins' => 'Techpanda\Core\Models\MonthlySaving'
+        'monthlySavins' => ['Techpanda\Core\Models\MonthlySaving', 'key' => 'transaction_id', 'otherKey' => 'id']
     ];
 
     public $belongsToMany = [

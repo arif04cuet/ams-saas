@@ -13,8 +13,13 @@ use Techpanda\Core\Models\Association;
 use Techpanda\Core\Models\MonthlySaving;
 
 Route::get('/backend/test', function () {
+    $from = 2020;
+    $to = 2021;
+    $userId = 50;
 
-    phpinfo();
+    $items = MonthlySaving::monthSavingsByUserWithDate($userId, $from, $to);
+    traceLog($items);
+    return $items;
 });
 
 Route::get('/backend/sendsms', function () {

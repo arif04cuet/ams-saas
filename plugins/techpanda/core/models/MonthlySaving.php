@@ -2,6 +2,7 @@
 
 namespace Techpanda\Core\Models;
 
+use Illuminate\Support\Facades\DB;
 use Model;
 
 use function Matrix\trace;
@@ -29,7 +30,6 @@ class MonthlySaving extends Model
     ];
 
     public $belongsTo = [
-
         'user' => 'Backend\Models\User',
         'transaction' => 'Techpanda\Core\Models\Transaction'
     ];
@@ -87,5 +87,23 @@ class MonthlySaving extends Model
                 return $item['month'] . '-' . $item['year'];
             })->toArray()
         ];
+    }
+
+    public static function monthSavingsByUserWithDate($userId, $fromYear, $toYear)
+    {
+
+
+        $items = DB::table('techpanda_core_monthly_savings AS ms')
+            ->join('techpanda_core_transactions AS t', 'ms.transaction_id', '=', 't.id')
+            ->select('ms.id', 'ms.user_id', 'ms.month', 'ms.year',  't.tnx_date', 't.status')
+            ->where('ms.user_id', $userId)
+            ->whereBetween('ms.year', [$fromYear, $toYear])
+            ->where('t.status', 'paid')
+            ->get()
+            ->keyBy('month')
+            ->all();
+
+        traceLog($items);
+        return $items;
     }
 }
