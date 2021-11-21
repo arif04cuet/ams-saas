@@ -103,7 +103,7 @@ class MonthlySaving extends Model
             ->keyBy('month')
             ->all();
 
-        traceLog($items);
+
         return $items;
     }
 }

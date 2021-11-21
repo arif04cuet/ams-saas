@@ -5,12 +5,19 @@ $fy = (new Techpanda\Core\Models\Transaction())->getFiscalYearOptions();
 <div class="toolbar-widget list-header ">
 
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-4">
             <p>Full Excel Report till Today: </p>
             <a target="__blank" href="<?= Backend::url('techpanda/core/transactions/downloadExcel') ?>"
                 class="btn btn-primary oc-icon-upload">Export </a>
         </div>
-        <div class="col-md-6">
+
+        <div class="col-md-4">
+            <p>Full Share Report till Today: </p>
+            <a target="__blank" href="<?= Backend::url('techpanda/core/transactions/downloadShareReport') ?>"
+                class="btn btn-primary oc-icon-upload">Export </a>
+        </div>
+
+        <div class="col-md-4">
             <p>Quarterly Excel Report: </p>
             <div>
                 <form data-request-validate data-request-flash class="form-inline">

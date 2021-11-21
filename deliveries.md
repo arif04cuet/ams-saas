@@ -22,7 +22,7 @@
 - [x] members tab filters by dropdown - All. active, inactive, associate
 - [x] add father name to new form + associate form
 - [x] Print Share certificate from dashbord transaction list.
-- [] share excel report as like as savings
-- [] add tnx date in main excel report.
+- [x] share excel report as like as savings
+- [x] add tnx date in main excel report.
 - [] Profile image issue
 - [] application menu enable/disable

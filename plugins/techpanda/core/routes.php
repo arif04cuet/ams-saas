@@ -17,9 +17,11 @@ Route::get('/backend/test', function () {
     $to = 2021;
     $userId = 50;
 
-    $items = MonthlySaving::monthSavingsByUserWithDate($userId, $from, $to);
-    traceLog($items);
-    return $items;
+    $items = AccountHead::allShareTransactions();
+
+
+
+    return $items->toArray();
 });
 
 Route::get('/backend/sendsms', function () {

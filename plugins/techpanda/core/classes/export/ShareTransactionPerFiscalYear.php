@@ -23,7 +23,7 @@ use Techpanda\Core\Models\Association;
 use Techpanda\Core\Models\MonthlySaving;
 use Techpanda\Core\Models\Transaction;
 
-class TransactionPerFiscalYear implements FromArray, WithTitle, WithHeadings, WithEvents, ShouldAutoSize
+class ShareTransactionPerFiscalYear implements FromArray, WithTitle, WithHeadings, WithEvents, ShouldAutoSize
 {
 
     use Exportable, RegistersEventListeners;
@@ -31,7 +31,7 @@ class TransactionPerFiscalYear implements FromArray, WithTitle, WithHeadings, Wi
     private $fiscalYear;
     private $tenant;
     public const userCells = 5;
-    public const balanceCells = 2;
+    public const balanceCells = 1;
     public const cellsforEachMonth = 2;
 
     public function __construct($fiscalYear, $tenant)
@@ -52,7 +52,7 @@ class TransactionPerFiscalYear implements FromArray, WithTitle, WithHeadings, Wi
         $months = Transaction::getMonthsByFiscalYear($this->fiscalYear);
         $monthCols = [];
 
-        $startBalance = 'Balance Up to ' . date("F-Y", strtotime("-1 months", strtotime('1-' . $months[0])));
+        $startBalance = 'Share Up to ' . date("F-Y", strtotime("-1 months", strtotime('1-' . $months[0])));
         for ($i = 1; $i <= self::balanceCells; $i++) {
             $monthCols[] = $i == 1 ? $startBalance : ' ';
         }
@@ -65,7 +65,7 @@ class TransactionPerFiscalYear implements FromArray, WithTitle, WithHeadings, Wi
             }
         }
 
-        $endBalance = 'Balance Up to ' . date("F-Y", strtotime('1-' . $months[count($months) - 1]));
+        $endBalance = 'Share Up to ' . date("F-Y", strtotime('1-' . $months[count($months) - 1]));
         for ($i = 1; $i <= self::balanceCells; $i++) {
             $monthCols[] = $i == 1 ? $endBalance : ' ';
         }
@@ -84,9 +84,14 @@ class TransactionPerFiscalYear implements FromArray, WithTitle, WithHeadings, Wi
 
 
         $firstRow = ['Sl No.', 'Member No.', 'Name', 'Designstion', 'Mobile'];
+
         for ($i = 0; $i < 14; $i++) {
-            $firstRow[] = 'Savings';
-            $firstRow[] = in_array($i, [0, 13]) ? 'Share' : 'Tnx Date';
+            if (in_array($i, [0, 13])) {
+                $firstRow[] = 'Share';
+            } else {
+                $firstRow[] = 'Share';
+                $firstRow[] = 'Tnx Date';
+            }
         }
 
         $data = $this->dataByFiscalYear($this->fiscalYear);
@@ -217,7 +222,8 @@ class TransactionPerFiscalYear implements FromArray, WithTitle, WithHeadings, Wi
 
         $fiscalYearMonths = Transaction::getMonthsByFiscalYear($fiscalYear);
 
-
+        //all share transactions
+        $allshareTnx = AccountHead::allShareTransactions();
         //['Sl No.', 'Member No.', 'Name', 'Designstion', 'Mobile'];
         $i = 1;
         foreach ($members as $member) {
@@ -243,35 +249,37 @@ class TransactionPerFiscalYear implements FromArray, WithTitle, WithHeadings, Wi
             $firstMonth = date('Y-m-d', mktime(0, 0, 0, 6, 30, $from));
             $headTotals = AccountHead::headsAmount($member->id, null, $firstMonth);
 
-            $row[] = $headTotals[AccountHead::getSavingHeadName()];
             $row[] = $headTotals[AccountHead::getShareHeadName()];
 
 
-            $savingsDates = MonthlySaving::monthSavingsByUserWithDate($member->id, $from, $to);
-            if ($member->login == '003E511') {
-            }
+            $userShareTnx = $allshareTnx->where('user_id', $member->id)->keyBy(function ($item) {
+                return $item->year . '_' . $item->month;
+            })->all();
 
             foreach ($fiscalYearMonths as $my) {
 
                 list($month, $year) = explode('-', $my);
-                $row[] = in_array($month, $months) ? $monthSaving : 0;
-                $row[] = isset($savingsDates[$month]) && $year == $savingsDates[$month]->year ? date("d-m-Y", strtotime($savingsDates[$month]->tnx_date)) : 0;
+
+                if (isset($userShareTnx[$year . '_' . $month]) && $tnx = $userShareTnx[$year . '_' . $month]) {
+                    $row[] = $tnx->fee * $tnx->quantity;
+                    $row[] = date("d-m-Y", strtotime($tnx->tnx_date));
+                } else {
+                    $row[] = 0;
+                    $row[] = 0;
+                }
             }
 
             //fiscal year ending balance
             $lastMonth = date('Y-m-d', mktime(0, 0, 0, 6, 30, $to));
             $headTotals = AccountHead::headsAmount($member->id, null, $lastMonth);
 
-            $row[] = $headTotals[AccountHead::getSavingHeadName()];
             $row[] = $headTotals[AccountHead::getShareHeadName()];
-
 
             $i++;
 
             $data[] = $row;
         }
 
-        //traceLog($data);
         return $data;
     }
 }

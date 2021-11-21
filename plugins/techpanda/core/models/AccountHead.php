@@ -159,4 +159,19 @@ class AccountHead extends Model
     {
         return 'share';
     }
+
+    public static function allShareTransactions()
+    {
+        $items = DB::table('techpanda_core_transactions AS t')
+            ->select('t.title as fy', 't.user_id', 't.tnx_date', DB::raw('YEAR(t.tnx_date) as year'), DB::raw('MONTHNAME(t.tnx_date) as month'), 't.status', 'hf.fee', 'th.quantity')
+            ->join('techpanda_core_transaction_head AS th', 't.id', '=', 'th.transaction_id')
+            ->join('backend_users AS u', 't.user_id', '=', 'u.id')
+            ->join('techpanda_core_head_fees AS hf', 'hf.id', '=', 'th.headfee_id')
+            ->join('techpanda_core_account_heads AS ah', 'ah.id', '=', 'hf.head_id')
+            ->where('ah.code', AccountHead::getShareHeadName())
+            ->where('t.status', 'paid')
+            ->get();
+
+        return $items;
+    }
 }

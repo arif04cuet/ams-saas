@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use NumberFormatter;
 use Queue;
 use Techpanda\Core\Classes\Export\QTransactionExport;
+use Techpanda\Core\Classes\Export\ShareExport;
 use Techpanda\Core\Classes\Export\TransactionExport;
 use Techpanda\Core\Classes\Helper;
 use Techpanda\Core\Models\AccountHead;
@@ -70,6 +71,15 @@ class Transactions extends Controller
         $filename = 'transactions_' . date("Y_m_d_H_i");
         return Excel::export($export, $filename, 'xlsx');
     }
+
+    public function downloadShareReport()
+    {
+        //excel export
+        $export = new ShareExport(Helper::getAssociationId());
+        $filename = 'share_reports_' . date("Y_m_d_H_i");
+        return Excel::export($export, $filename, 'xlsx');
+    }
+
 
     public function downloadQReport()
     {
