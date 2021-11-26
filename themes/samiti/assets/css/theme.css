@@ -3,7 +3,7 @@
 }
 
 .mainmenu{
-
+        
 }
 .mainmenu li{
     display:inline;
@@ -11,11 +11,12 @@
 }
 
 #layout-content{
-
-    min-height:300px;
-    margin-top: 10px;
+    
+    min-height:300px;    
+    margin-top: 20px;
 }
 
-.preview th{
-    font-size: 14px;
+body{
+
+font-size: .9rem;    
 }

@@ -248,14 +248,16 @@ class TransactionPerFiscalYear implements FromArray, WithTitle, WithHeadings, Wi
 
 
             $savingsDates = MonthlySaving::monthSavingsByUserWithDate($member->id, $from, $to);
-            if ($member->login == '003E511') {
-            }
+            // if ($member->login == '003E511') {
+            //     traceLog($fiscalYear);
+            //     traceLog($savingsDates);
+            // }
 
             foreach ($fiscalYearMonths as $my) {
 
                 list($month, $year) = explode('-', $my);
                 $row[] = in_array($month, $months) ? $monthSaving : 0;
-                $row[] = isset($savingsDates[$month]) && $year == $savingsDates[$month]->year ? date("d-m-Y", strtotime($savingsDates[$month]->tnx_date)) : 0;
+                $row[] = isset($savingsDates[$my]) ? date("d-m-Y", strtotime($savingsDates[$my]->tnx_date)) : 0;
             }
 
             //fiscal year ending balance

@@ -93,14 +93,19 @@ class MonthlySaving extends Model
     {
 
 
-        $items = DB::table('techpanda_core_monthly_savings AS ms')
+        $query = DB::table('techpanda_core_monthly_savings AS ms')
             ->join('techpanda_core_transactions AS t', 'ms.transaction_id', '=', 't.id')
             ->select('ms.id', 'ms.user_id', 'ms.month', 'ms.year',  't.tnx_date', 't.status')
             ->where('ms.user_id', $userId)
             ->whereBetween('ms.year', [$fromYear, $toYear])
-            ->where('t.status', 'paid')
-            ->get()
-            ->keyBy('month')
+            ->where('t.status', 'paid');
+
+        //AccountHead::logSqlQuery($query);
+
+        $items = $query->get()
+            ->keyBy(function ($item) {
+                return $item->month . '-' . $item->year;
+            })
             ->all();
 
 

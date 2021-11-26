@@ -1,5 +1,37 @@
 items:
     -
+        title: 'নতুন আবেদন'
+        type: url
+        url: '#'
+        code: ''
+        viewBag:
+            isHidden: '0'
+            cssClass: ''
+            isExternal: '0'
+        items:
+            -
+                title: 'মেম্বার আবেদন'
+                nesting: null
+                type: cms-page
+                url: null
+                code: ''
+                reference: online-application
+                cmsPage: null
+                replace: null
+                viewBag:
+                    isHidden: '0'
+                    cssClass: ''
+                    isExternal: '0'
+            -
+                title: 'সহযোগী মেম্বার আবেদন'
+                type: cms-page
+                code: ''
+                reference: associate-member-form
+                viewBag:
+                    isHidden: '0'
+                    cssClass: ''
+                    isExternal: '0'
+    -
         title: 'Static age'
         nesting: null
         type: all-static-pages
@@ -13,25 +45,16 @@ items:
             cssClass: ''
             isExternal: '0'
     -
-        title: 'Online Application'
-        type: cms-page
-        code: ''
-        reference: online-application
-        viewBag:
-            isHidden: '0'
-            cssClass: ''
-            isExternal: '0'
-    -
-        title: 'Associate Member Application'
+        title: 'মেম্বার লগইন'
         nesting: null
-        type: cms-page
-        url: null
+        type: url
+        url: /backend
         code: ''
-        reference: associate-member-form
+        reference: null
         cmsPage: null
         replace: null
         viewBag:
             isHidden: '0'
-            cssClass: ''
-            isExternal: '0'
+            cssClass: 'btn btn-primary'
+            isExternal: '1'
 name: 'Main Menu'

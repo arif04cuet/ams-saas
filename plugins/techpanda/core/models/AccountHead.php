@@ -118,9 +118,6 @@ class AccountHead extends Model
         if (!empty($to))
             $heads->whereDate('t.tnx_date', '<=', $to);
 
-        // traceLog(vsprintf(str_replace('?', '%s', $heads->toSql()), collect($heads->getBindings())->map(function ($binding) {
-        //     return is_numeric($binding) ? $binding : "'{$binding}'";
-        // })->toArray()));
 
         $heads = $heads->get()->pluck('total_amount', 'code');
 
@@ -149,7 +146,12 @@ class AccountHead extends Model
 
     //functions
 
-
+    public static function logSqlQuery($query)
+    {
+        traceLog(vsprintf(str_replace('?', '%s', $query->toSql()), collect($query->getBindings())->map(function ($binding) {
+            return is_numeric($binding) ? $binding : "'{$binding}'";
+        })->toArray()));
+    }
     public static function getSavingHeadName()
     {
         return 'monthly-deposit-savings';
