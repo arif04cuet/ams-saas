@@ -1,18 +1,18 @@
-### New Features
+#### Samity Software Enhancement
 
-####Overall Progress
+#####Overall Progress
 - [x] Fiscal year wise member setup - member disable option .
 - [x] Associate Member - registration form and approval. Associate member type , will be able to see only member list in dashboard.
 - [x] New member application (Online) -  Form design, Approval process, notifications to admin, export member list.
 - [x] Share Certificate  - member will be able to download share centificate from member dashboard after transation approved.
 - [x] Excel Report - Need quarterly excel report.
-- [] Excel Report - need a new sheet for share details as like as saving sheet.
-- [] Membership closing request (Online) - Form design, Approval process, notifications to admin.
-- [] New Deposit Channel - add a new deposit channel 'DBBL check deposit'- in check deposite we got account number. so need to match with account number. recently nexas pay also giving account number in statement.
+- [x] Excel Report - need a new report for share details as like as saving sheet.
 - [] Frontend website design.
+- [] New deposit channel - add a new deposit channel 'DBBL check deposit'- in check deposite we got account number. so need to match with account number. recently nexas pay also giving account number in statement.
+- [] Membership closing request (Online) - Form design, approval process, notifications to admin.
 - [] eNothi document flow.
 
-#### Latest Feedback progress
+##### Latest Feedback progress
 - [x] Roll dropdown only show users who are not member of association yet, search list by name/roll.
 - [x] cancel / edit on preview view
 - [x] print view - font small, gap descrease - 1 page
